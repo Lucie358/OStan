@@ -4,22 +4,23 @@ namespace App\Entity;
 
 use App\Entity\Job;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\Collection;
 use App\Utils\Slugger as Slugger;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"email"}, message="Un compte existe déjà avec cette adresse mail.")
  * @UniqueEntity(fields={"username"}, message="Ce pseudo existe déjà.") 
  */
-class User implements UserInterface, \Serializable, EquatableInterface
+class User implements AdvancedUserInterface, \Serializable, EquatableInterface
 {
     /**
      * @ORM\Id()
@@ -168,6 +169,11 @@ class User implements UserInterface, \Serializable, EquatableInterface
      */
     private $slug;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive;
+
 
     public function __construct()
     {
@@ -186,6 +192,26 @@ class User implements UserInterface, \Serializable, EquatableInterface
     public function __toString()
     {
         return $this->username;
+    }
+
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->isActive;
     }
 
     /**
@@ -641,6 +667,7 @@ class User implements UserInterface, \Serializable, EquatableInterface
             $this->id,
             $this->username,
             $this->password,
+            $this->isActive
             // see section on salt below
             // $this->salt,
         ));
@@ -653,6 +680,7 @@ class User implements UserInterface, \Serializable, EquatableInterface
             $this->id,
             $this->username,
             $this->password,
+            $this->isActive
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized);
@@ -703,6 +731,18 @@ class User implements UserInterface, \Serializable, EquatableInterface
     public function setSlug($slug)
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }

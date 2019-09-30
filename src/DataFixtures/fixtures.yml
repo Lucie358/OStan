@@ -20,6 +20,7 @@ App\Entity\User:
     tags: "2x @tag*"
     jobs: "2x @job*"
     slug: "<word()>"
+    is_active: "1"
 
 App\Entity\Role:
   role1:
