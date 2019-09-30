@@ -7,72 +7,66 @@
 {% block content %}
 
 
-    <h1 class="text-center font-weight-bold">Les utilisateurs</h1>
+<h1 class="text-center font-weight-bold">Les utilisateurs</h1>
 
-    <div class="table-responsive">
+<div class="table-responsive">
 
-        <table id="horizontalScroll" class="table table-striped userTable">
+    <table id="horizontalScroll" class="table table-striped userTable">
 
-            <thead class="position-sticky text-uppercase">
+        <thead class="position-sticky text-uppercase">
 
+            <tr>
+                <th scope="col">Prénom</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Pseudo</th>
+                <th scope="col">Entreprise</th>
+                <th scope="col">Naissance</th>
+                <th scope="col">Email</th>
+                <th scope="col">Adresse</th>
+                <th scope="col">Téléphone</th>
+                <th scope="col">Inscrit depuis</th>
+                <th scope="col">Job(s)</th>
+                <th scope="col">Rôle</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for user in listUser %}
                 <tr>
-                    <th scope="col">#Id</th>
-                    <th scope="col">Prénom</th>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Pseudo</th>
-                    <th scope="col">Entreprise</th>
-                    <th scope="col">Naissance</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Adresse</th>
-                    <th scope="col">Téléphone</th>
-                    <th scope="col">Inscrit depuis</th>
-                    <th scope="col">Tag(s)</th>
-                    <th scope="col">Job(s)</th>
-                    <th scope="col">Rôle</th>
-                </tr>
+                    <td>{{user.firstname}}</td>
+                    <td>{{user.lastname}}</td>
+                    <td>{{user.username}}</td>
+                    <td>{{user.companyname}}</td>
+                    <td>{{user.birthdate | date('d/m/Y à H:i') }}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.address}}</td>
+                    <td>{{user.phonenumber}}</td>
+                    <td>{{user.createdAt| date('d/m/Y à H:i')}}</td>
+                    
+                    <td>
+                        {% for job in user.jobs %}
+                            {{job.name}}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            {# onchange : premier paramètre 'this' renvoie l'élément html où il se trouve, donc Select dans notre cas #}
+                            {# le deuxième paramètre est généré par twig c'est l'id du user #}
+                                <select class="form-control" id="select_role_{{user.id}}" onchange="handleRoleSelect(this, {{user.id}})"> {% for role in roles %}
+                                    {# " ? et : " = Ternaire. Si le code du role du user est == au code du role dans notre boucle, alors affiche selected #}
+                                    {# selected affichera directement le role par défaut du user #}
+                                        <option value="{{role.id}}" {{user.role.code == role.code ? "selected" : ""}}> {{role.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </td>
+                    <td class="d-flex">
 
-            </thead>
+                        <button href="{{ path('backend_user_update_status', {'id': user.id, 'isNonLocked':user.isAccountNonLocked}) }}" class="btn btn-warning">{% if user.isAccountNonLocked %}<i class="fas fa-user-lock"></i> Bloquer{% else %}
+                            <i class="fas fa-lock-open"></i> Débloquer{% endif %}</button>
 
-            <tbody>
-
-                {% for user in listUser %}
-                    <tr>
-                        <th scope="row">{{user.id}}</th>
-                        <td>{{user.firstname}}</td>
-                        <td>{{user.lastname}}</td>
-                        <td>{{user.username}}</td>
-                        <td>{{user.companyname}}</td>
-                        <td>{{user.birthdate | date('d/m/Y à H:i') }}</td>
-                        <td>{{user.email}}</td>
-                        <td>{{user.address}}</td>
-                        <td>{{user.phonenumber}}</td>
-                        <td>{{user.createdAt| date('d/m/Y à H:i')}}</td>
-                        <td>{{user.slug}}</td>
-                        <td>
-                            {% for job in user.jobs %}
-                                {{job.name}}
-                            {% endfor %}
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                {# onchange : premier paramètre 'this' renvoie l'élément html où il se trouve, donc Select dans notre cas #}
-                                {# le deuxième paramètre est généré par twig c'est l'id du user #}
-                                    <select class="form-control" id="select_role_{{user.id}}" onchange="handleRoleSelect(this, {{user.id}})"> {% for role in roles %}
-                                        {# " ? et : " = Ternaire. Si le code du role du user est == au code du role dans notre boucle, alors affiche selected #}
-                                        {# selected affichera directement le role par défaut du user #}
-                                            <option value="{{role.id}}" {{user.role.code == role.code ? "selected" : ""}}> {{role.name}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </td>
-                        <td class="d-flex">
-                            {# Pour les paramètres de onclick, si le status du post est == a BLOCKED alors le param = UNBLOCKED #}
-                            <button
-                                type="button" class="btn btn-warning" onclick="handleStatusButton(this,{{user.id}},{{user.status.code == 'BLOCKED' ? " 'UNBLOCKED' " : " 'BLOCKED' "}})">
-                                {# Si le code du status du post est == a BLOCKED alors on ecrit Débloquer dans le bouton #}
-                                <i class="fas fa-minus-circle"></i>
-                                {{user.status.code == "BLOCKED" ? "Débloquer l'utilisateur" : "Bloquer l'utilisateur"}}
-                            </button>
                             {{ include('backend/user/_delete.html.twig') }}
                         </td>
                     </tr>
@@ -83,7 +77,7 @@
         </table>
 
     </div>
-    
+
 
     <div class="d-flex justify-content-center">
         {{ knp_pagination_render(listUser) }}
@@ -116,30 +110,7 @@
                 }
             });
         }
-        function handleStatusButton(elementButton, userId, statusCode) {
-            // console.log(postId);
-            // console.log(window.location)
-            // console.log(baseUrl);
-            // console.log(elementButton);
-            // On utilise ajax pour faire une requête http en mode "rest" donc sans render
-            $.ajax({
-                method: "PATCH",
-                url: baseUrl + "/backend/user/" + userId + "/status/" + statusCode,
 
-                // En cas de succès on affiche un toast confirmant le changement de rôle du user.
-                success: function (result) {
-                    toastr.success('Statut mis à jour');
-                    elementButton.textContent = statusCode == "BLOCKED" ? "Débloquer l'utilisateur" : "Bloquer l'utilisateur";
-                    elementButton.onclick = function () {
-                        return handleStatusButton(elementButton, userId, statusCode == "BLOCKED" ? "UNBLOCKED" : "BLOCKED")
-                    };
-                },
-                error: function () {
-                    toastr.error('Impossible de mettre à jour le statut.')
-
-                }
-            });
-        }
 
         $(document).ready(function () {
             $('#horizontalScroll').dataTable({"scrollX": true});

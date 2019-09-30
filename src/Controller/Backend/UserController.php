@@ -31,7 +31,7 @@ class UserController extends AbstractController
      */
     public function userList(UserRepository $userRepository, RoleRepository $roleRepository, Request $request, PaginatorInterface $paginator)
     {
-        
+
 
         $roles = $roleRepository->findAll();
         $users = $this->getDoctrine()->getRepository(User::class)->findBy(array(), array('username' => 'ASC'));
@@ -124,29 +124,22 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("user/{id}/status/{statusCode}", name="user_update_status", methods={"PATCH"})
+     * @Route("user/{id}/status/{isNonLocked}", name="user_update_status", methods={"PATCH"})
      */
-    public function updateStatus(Request $request, User $user, StatusRepository $statusRepository, $id): JsonResponse
+    public function updateStatus(Request $request, User $user)
     {
-        $statusCode = $request->get("statusCode");
-        $newStatus = $statusRepository->findOneBy(['code' => $statusCode]);
+        $isNonLocked = $request->get('isNonLocked');
 
-        // 1 - On récupère le statusId fourni via l'url de la requête (Request)
-        $user = $user->setStatus($newStatus);
+        if ($isNonLocked == true) {
+            $user = $user->setIsAccountNonLocked(false);
+        }
+        $user = $user->setIsAccountNonLocked(true);
 
         //On met à jour en base
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
-        //On construit manuellement la réponse envoyée au navigateur (pas réussi à utiliser le module sérializer pour transformer un objet en Json)
-        $toReturn = [
-            'id' => $user->getId(),
-            'firstname' => $user->getFirstname(),
-            'lastname' => $user->getLastname(),
-        ];
-        //On construit une réponse json grâce à notre tableau fait-main toReturn
-        $response = new JsonResponse($toReturn);
-        //On l'envoie au navigateur, on peut les voir dans Network du devtool
-        return $response;
+
+        return $this->redirectToRoute('backend_userList');
     }
 }

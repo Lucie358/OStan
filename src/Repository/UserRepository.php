@@ -38,6 +38,17 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+     /**
+     * @return User[] Returns an array of User objects
+     */
+    public function findEditors()
+    {
+        return $this->createQueryBuilder('u')
+            ->innerJoin('u.jobs', 'j')
+            ->andWhere("j.name  = 'Editeur'")
+            ->getQuery()
+            ->getResult();
+    }
 
     /**
      * @return User[] Returns an array of User objects

@@ -21,6 +21,8 @@ App\Entity\User:
     jobs: "2x @job*"
     slug: "<word()>"
     is_active: "1"
+    is_account_non_locked: "1"
+
 
 App\Entity\Role:
   role1:

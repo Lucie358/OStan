@@ -125,16 +125,8 @@
             </nav>
         {% endblock %}
         {% block body %}
-            <div
-                class="body_backend">
-                {# Je veux afficher le message paramétrés dans les méthodes add, edit et delete #}
-                {% for label, messages in app.flashes %}
-                    {% for message in messages %}
-                        <div class="alert alert-{{ label }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endfor %}
+            <div                class="body_backend">
+                
 
                 {% block content %}{% endblock %}
                 {% block search %}{% endblock %}

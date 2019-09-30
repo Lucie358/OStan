@@ -44,14 +44,14 @@ class PostController extends AbstractController
 
             $postsearch = $postRepository->searchAdList($jobs);
             //dd($criterias['users']);
-        }else {
-            
+        } else {
+
             // Classés par date de création, du plus récent au plus ancien
-            $postsearch = $postRepository->findAllAdPost();            
-        }        
+            $postsearch = $postRepository->findAllAdPost();
+        }
 
         // PAGINATION //
-        
+
         $posts = $this->getDoctrine()->getRepository(Post::class)->findAllAdPost();
 
         $adListPost = $paginator->paginate(
@@ -60,45 +60,46 @@ class PostController extends AbstractController
             5 // Nombre de résultats par page
         );
         // FIN PAGINATION //
-        
+
 
         return $this->render('backend/post/adList.html.twig', [
             'postsearch' => $postsearch,
             'adListPost' => $adListPost,
-     
+
         ]);
     }
 
-    public function postSearchForm(Request $request, PostRepository $postRepository){
+    public function postSearchForm(Request $request, PostRepository $postRepository)
+    {
 
         $formSearchPost = $this->createForm(PostSearchType::class);
         $formSearchPost->handleRequest($request);
-    
+
         return $this->render('backend/post/adListForm.html.twig', [
             'formSearchPost' => $formSearchPost->createView(),
         ]);
-     }
+    }
 
 
 
-    public function postNavList(PostRepository $postRepository){
+    public function postNavList(PostRepository $postRepository)
+    {
 
         // Classés du plus récent au moins récent
         $postsearch = $postRepository->findBy(array(), array('createdAt' => 'DESC'));
         return $this->render('backend/post/adListSearch.html.twig', [
             'postsearch' => $postsearch,
-       ]);
+        ]);
     }
 
-   /* FIN RECHERCHE */
+    /* FIN RECHERCHE */
 
 
     /**
      * @Route("/articles", name="advicePostList")
      */
-    public function advicePostList(PostRepository $postRepository, Request $request, PaginatorInterface $paginator)
+    public function advicePostList(Request $request, PaginatorInterface $paginator)
     {
-
         $posts = $this->getDoctrine()->getRepository(Post::class)->findAllAdvicePost();
         $listPost = $paginator->paginate(
             $posts, // Requête contenant les données à paginer (ici nos articles)
@@ -118,19 +119,15 @@ class PostController extends AbstractController
     public function advicePostNew(Request $request, StatusRepository $statusRepository, Slugger $slugger)
     {
         $statusCode = 'UNBLOCKED';
-        $statusCode= $statusRepository->findOneByCode($statusCode);
+        $statusCode = $statusRepository->findOneByCode($statusCode);
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
-
-        
-
-        
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             $file1 = $post->getPicture1();
 
-            if(!is_null($post->getPicture1())){
+            if (!is_null($post->getPicture1())) {
                 //je genere un nom de fichier unique pour eviter d'ecraser un fichier du meme nom & je concatene avec l'extension du fichier d'origine
                 $fileName1 = $this->generateUniqueFileName() . '.' . $file1->guessExtension();
                 try {
@@ -147,9 +144,9 @@ class PostController extends AbstractController
 
             $file2 = $post->getPicture2();
 
-            if(!is_null($post->getPicture2())){
+            if (!is_null($post->getPicture2())) {
                 //je genere un nom de fichier unique pour eviter d'ecraser un fichier du meme nom & je concatene avec l'extension du fichier d'origine
-                $fileName2 = $this->generateUniqueFileName().'.'.$file2->guessExtension();
+                $fileName2 = $this->generateUniqueFileName() . '.' . $file2->guessExtension();
 
                 try {
                     //je deplace mon fichier dans le dossier souhaité
@@ -166,9 +163,9 @@ class PostController extends AbstractController
 
             $file3 = $post->getPicture3();
 
-            if(!is_null($post->getPicture3())){
+            if (!is_null($post->getPicture3())) {
                 //je genere un nom de fichier unique pour eviter d'ecraser un fichier du meme nom & je concatene avec l'extension du fichier d'origine
-                $fileName3 = $this->generateUniqueFileName().'.'.$file3->guessExtension();
+                $fileName3 = $this->generateUniqueFileName() . '.' . $file3->guessExtension();
 
                 try {
                     //je deplace mon fichier dans le dossier souhaité
@@ -190,14 +187,11 @@ class PostController extends AbstractController
             $post->setSlug($slug);
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager -> persist($post);
-            $entityManager -> flush();
+            $entityManager->persist($post);
+            $entityManager->flush();
 
 
-            $this->addFlash(
-                'success',
-                'Votre article a bien été enregistré !'
-            );
+
 
             return $this->redirectToRoute('backend_advicePostList');
         }
@@ -212,42 +206,42 @@ class PostController extends AbstractController
      */
     public function advicePostEdit(Request $request, Post $post)
     {
-        
+
         $oldPicture1 = $post->getPicture1();
         $oldPicture2 = $post->getPicture2();
         $oldPicture3 = $post->getPicture3();
 
-        
 
-        if(!empty($oldPicture1)) {
+
+        if (!empty($oldPicture1)) {
             $post->setPicture1(
-                new File($this->getParameter('image_directory').'/'.$oldPicture1)
+                new File($this->getParameter('image_directory') . '/' . $oldPicture1)
             );
         }
-        
-        if(!empty($oldPicture2)) {
+
+        if (!empty($oldPicture2)) {
             $post->setPicture2(
-                new File($this->getParameter('image_directory').'/'.$oldPicture2)
+                new File($this->getParameter('image_directory') . '/' . $oldPicture2)
             );
         }
-        
-        if(!empty($oldPicture3)) {
+
+        if (!empty($oldPicture3)) {
             $post->setPicture3(
-                new File($this->getParameter('image_directory').'/'.$oldPicture3)
+                new File($this->getParameter('image_directory') . '/' . $oldPicture3)
             );
         }
 
 
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if(!is_null($post->getPicture1())){
+            if (!is_null($post->getPicture1())) {
 
                 $file1 = $post->getPicture1();
-            
-                $fileName1 = $this->generateUniqueFileName().'.'.$file1->guessExtension();
+
+                $fileName1 = $this->generateUniqueFileName() . '.' . $file1->guessExtension();
 
                 try {
                     $file1->move(
@@ -257,26 +251,25 @@ class PostController extends AbstractController
                 } catch (FileException $e) {
                     dump($e);
                 }
-                
+
                 $post->setPicture1($fileName1);
 
-                if(!empty($oldPicture1)){
+                if (!empty($oldPicture1)) {
 
                     unlink(
-                        $this->getParameter('image_directory') .'/'.$oldPicture1
+                        $this->getParameter('image_directory') . '/' . $oldPicture1
                     );
                 }
-
             } else {
-                
-                $post->setPicture1($oldPicture1);//ancien nom de fichier
+
+                $post->setPicture1($oldPicture1); //ancien nom de fichier
             }
 
-            if(!is_null($post->getPicture2())){
+            if (!is_null($post->getPicture2())) {
 
                 $file2 = $post->getPicture2();
-            
-                $fileName2 = $this->generateUniqueFileName().'.'.$file2->guessExtension();
+
+                $fileName2 = $this->generateUniqueFileName() . '.' . $file2->guessExtension();
 
                 try {
                     $file2->move(
@@ -286,26 +279,25 @@ class PostController extends AbstractController
                 } catch (FileException $e) {
                     dump($e);
                 }
-                
+
                 $post->setPicture2($fileName2);
 
-                if(!empty($oldPicture2)){
+                if (!empty($oldPicture2)) {
 
                     unlink(
-                        $this->getParameter('image_directory') .'/'.$oldPicture2
+                        $this->getParameter('image_directory') . '/' . $oldPicture2
                     );
                 }
-
             } else {
-                
-                $post->setPicture2($oldPicture2);//ancien nom de fichier
+
+                $post->setPicture2($oldPicture2); //ancien nom de fichier
             }
 
-            if(!is_null($post->getPicture3())){
+            if (!is_null($post->getPicture3())) {
 
                 $file3 = $post->getPicture3();
-            
-                $fileName3 = $this->generateUniqueFileName().'.'.$file3->guessExtension();
+
+                $fileName3 = $this->generateUniqueFileName() . '.' . $file3->guessExtension();
 
                 try {
                     $file3->move(
@@ -315,23 +307,21 @@ class PostController extends AbstractController
                 } catch (FileException $e) {
                     dump($e);
                 }
-                
+
                 $post->setPicture3($fileName3);
 
-                if(!empty($oldPicture3)){
+                if (!empty($oldPicture3)) {
 
                     unlink(
-                        $this->getParameter('image_directory') .'/'.$oldPicture3
+                        $this->getParameter('image_directory') . '/' . $oldPicture3
                     );
                 }
-
             } else {
-                
-                $post->setPicture3($oldPicture3);//ancien nom de fichier
+
+                $post->setPicture3($oldPicture3); //ancien nom de fichier
             }
 
             $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', 'Article modifié.');
             return $this->redirectToRoute('backend_advicePostList');
         }
         return $this->render('backend/post/advicePostEdit.html.twig', [
@@ -349,7 +339,6 @@ class PostController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->remove($post);
             $em->flush();
-            $this->addFlash('success', 'Article supprimé.');
         }
         return $this->redirectToRoute('backend_advicePostList');
     }
@@ -363,7 +352,6 @@ class PostController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->remove($post);
             $em->flush();
-            $this->addFlash('success', 'Annonce supprimée.');
         }
         return $this->redirectToRoute('backend_adList');
     }
