@@ -124,16 +124,17 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("user/{id}/status/{isNonLocked}", name="user_update_status", methods={"PATCH"})
+     * @Route("user/{id}/islocked", name="user_update_status")
      */
     public function updateStatus(Request $request, User $user)
     {
-        $isNonLocked = $request->get('isNonLocked');
-
-        if ($isNonLocked == true) {
+        $user = $request->get('id');
+        if ($user->getIsAccountNonLocked()) {
             $user = $user->setIsAccountNonLocked(false);
+        } else {
+            $user = $user->setIsAccountNonLocked(true);
         }
-        $user = $user->setIsAccountNonLocked(true);
+
 
         //On met à jour en base
         $em = $this->getDoctrine()->getManager();
