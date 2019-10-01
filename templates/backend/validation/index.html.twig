@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Validation éditeur
+{% endblock %}
+
+{% block content %}
+    <h1>Validation éditeur</h1>
+    <h3>En attente...</h3>
+
+    <div></div>
+    <div class="table-responsive">
+        <table id="horizontalScroll" class="table table-striped userTable">
+
+            <thead class="position-sticky text-uppercase">
+
+                <tr>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Pseudo</th>
+                    <th scope="col">Entreprise</th>
+                    <th scope="col">Siret</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Job(s)</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for editor in editors %}
+                    {% if editor.isActive == false %}
+                        <tr>
+                            <td>{{editor.firstname}}</td>
+                            <td>{{editor.lastname}}</td>
+                            <td>{{editor.username}}</td>
+                            <td>{{editor.companyname}}</td>
+                            <td>{{editor.siret}}</td>
+                            <td>{{editor.email}}</td>
+                            <td>{{editor.address}}</td>
+                            <td>
+                                {% for job in editor.jobs %}
+                                    {{job.name}}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <a href="{{ path('backend_validate', {'id': editor.id}) }}" class="btn btn-success">Valider</a>
+                            </td>
+                        </tr>
+                    {% endif %}
+
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

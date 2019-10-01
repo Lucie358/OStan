@@ -63,6 +63,8 @@ class AppFixtures extends Fixture
         $userAdmin->setStatus($statusCode);
         $userAdmin->setSlug('mot');
         $userAdmin->setIsActive(true);
+        $userAdmin->setIsAccountNonLocked(true);
+
 
 
         $userAdmin->setBirthdate(new \Datetime());

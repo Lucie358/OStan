@@ -174,6 +174,11 @@ class User implements AdvancedUserInterface, \Serializable, EquatableInterface
      */
     private $isActive;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isAccountNonLocked;
+
 
     public function __construct()
     {
@@ -201,7 +206,7 @@ class User implements AdvancedUserInterface, \Serializable, EquatableInterface
 
     public function isAccountNonLocked()
     {
-        return true;
+        return $this->isAccountNonLocked;
     }
 
     public function isCredentialsNonExpired()
@@ -667,7 +672,9 @@ class User implements AdvancedUserInterface, \Serializable, EquatableInterface
             $this->id,
             $this->username,
             $this->password,
-            $this->isActive
+            $this->isActive,
+            $this->isAccountNonLocked
+
             // see section on salt below
             // $this->salt,
         ));
@@ -680,7 +687,9 @@ class User implements AdvancedUserInterface, \Serializable, EquatableInterface
             $this->id,
             $this->username,
             $this->password,
-            $this->isActive
+            $this->isActive,
+            $this->isAccountNonLocked
+
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized);
@@ -695,6 +704,14 @@ class User implements AdvancedUserInterface, \Serializable, EquatableInterface
         if ($this->username !== $user->getUsername()) {
             return false;
         }
+        if ($this->isActive !== $user->getIsActive()) {
+            return false;
+        }
+
+        if ($this->isAccountNonLocked!== $user->getIsAccountNonLocked()) {
+            return false;
+        }
+      
 
         return true;
     }
@@ -743,6 +760,18 @@ class User implements AdvancedUserInterface, \Serializable, EquatableInterface
     public function setIsActive(bool $isActive): self
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getIsAccountNonLocked(): ?bool
+    {
+        return $this->isAccountNonLocked;
+    }
+
+    public function setIsAccountNonLocked(bool $isAccountNonLocked): self
+    {
+        $this->isAccountNonLocked = $isAccountNonLocked;
 
         return $this;
     }
