@@ -3,6 +3,7 @@
 namespace App\Controller\Backend;
 
 use App\Entity\User;
+use App\Form\TagType;
 use App\Utils\Slugger;
 use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
@@ -10,11 +11,12 @@ use App\Repository\StatusRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 
 
@@ -128,9 +130,10 @@ class UserController extends AbstractController
      */
     public function updateStatus(Request $request, User $user)
     {
-        $user = $request->get('id');
-        if ($user->getIsAccountNonLocked()) {
+
+        if ($user->getIsAccountNonLocked() == true) {
             $user = $user->setIsAccountNonLocked(false);
+            
         } else {
             $user = $user->setIsAccountNonLocked(true);
         }
@@ -140,6 +143,7 @@ class UserController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
+
 
         return $this->redirectToRoute('backend_userList');
     }

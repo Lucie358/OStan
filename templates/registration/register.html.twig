@@ -5,14 +5,15 @@
 
 {% block body %}
     <h1 class="title-register">Inscription</h1>
-    {% for message in app.flashes('editorregister') %}
-        <div class="alert alert-warning">
-            {{ message }}
-        </div>
-    {% endfor %}
+    
+    
 
     <div class="form-register">
         <div class="card-body">
+        {% for message in app.flashes('editorregister') %}
+        <div class="alert alert-warning">
+            {{ message }}
+        </div>{% endfor %}
             {{ form_start(registrationForm) }}
             {{ form_row(registrationForm.avatar) }}
             {{ form_row(registrationForm.firstname) }}

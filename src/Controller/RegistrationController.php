@@ -78,6 +78,8 @@ class RegistrationController extends AbstractController
 
             $slug = $slugger->slugify($user->getUsername());
             $user->setSlug($slug);
+            $user->setIsAccountNonLocked(true);
+
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
