@@ -30,12 +30,27 @@ class ValidationController extends AbstractController
     /**
      * @Route("validate/{id}", name="validate")
      */
-    public function validate(User $user){
+    public function validate(User $user, \Swift_Mailer $mailer){
         $user = $user->setIsActive(true);
         //On met à jour en base
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
+
+        $userEmail = $user->getEmail();
+        $username = $user->getUsername();
+        $message = (new \Swift_Message('Bienvenue sur O\'Stan !'))
+                ->setFrom(['ostan.contact@gmail.com' => 'O\'Stan'])
+                ->setTo($userEmail);
+
+                $message->setBody(
+                    $this->renderView(
+                        'emails/registration.html.twig',
+                        ['username' => $username]
+                    ),
+                    'text/html'
+                );
+                $mailer->send($message);
 
         return $this->redirectToRoute('backend_validation');
 

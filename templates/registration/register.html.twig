@@ -31,7 +31,6 @@
             {{ form_row(registrationForm.email) }}
             {{ form_row(registrationForm.jobs) }}
             {{ form_row(registrationForm.tags) }}
-            <small>CTRL+clic pour séléctionner plusieurs tags (entre 1 et 5 tags)</small>
             {{ form_row(registrationForm.plainPassword) }}
             {{ form_row(registrationForm.agreeTerms) }}
 
@@ -72,6 +71,8 @@
         function _toggleEditorFields(isEditor) { // Les deux champs que l'on souhaite ajouter quand on coche editeur
             const siretField = document.getElementById("registration_form_siret");
             const companyField = document.getElementById("registration_form_companyname");
+            const companyFieldHelp = document.getElementById("registration_form_companyname_help");
+
 
             // (isEditor est sois true, sois false (c'est le event.target.checked plus haut))
             if (isEditor) { // Si isEditor est true alors on affiche les deux inputs et on les mets en required
@@ -79,6 +80,7 @@
                 siretField.required = true;
 
                 companyField.style.display = "block";
+                companyFieldHelp.style.display = "block";
                 companyField.required = true;
             } else { // Si isEditor est false alors on n'affiche pas les deux inputs et on les mets en non required et on les vide
                 siretField.style.display = "none";
@@ -86,6 +88,7 @@
                 siretField.required = false;
 
                 companyField.style.display = "none";
+                companyFieldHelp.style.display = "none";
                 companyField.value = "";
                 companyField.required = false;
             }

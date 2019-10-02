@@ -21,7 +21,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/inscription", name="app_register")
      */
-    public function register(StatusRepository $statusRepository, Request $request, GuardAuthenticatorHandler $guardHandler, UserPasswordEncoderInterface $passwordEncoder, LoginFormAuthenticator $authenticator, RoleRepository $roleRepository, Slugger $slugger): Response
+    public function register(StatusRepository $statusRepository, Request $request, GuardAuthenticatorHandler $guardHandler, UserPasswordEncoderInterface $passwordEncoder, LoginFormAuthenticator $authenticator, RoleRepository $roleRepository, Slugger $slugger, \Swift_Mailer $mailer): Response
     {
         $code = 'ROLE_USER_USER';
         $defaultRole = $roleRepository->findOneByCode($code);
@@ -63,6 +63,8 @@ class RegistrationController extends AbstractController
             foreach ($user->getJobs() as $job) {
                 if ($job->getName() == "Editeur") {
                     $user->setIsActive(false);
+                }else{
+                    $user->setIsActive(true);
                 }
 
                 # code...
@@ -89,6 +91,24 @@ class RegistrationController extends AbstractController
 
 
             if ($user->getIsActive() == true) {
+                $userEmail = $user->getEmail();
+                $username = $user->getUsername();
+                                     
+
+                $message = (new \Swift_Message('Bienvenue sur O\'Stan !'))
+                ->setFrom(['ostan.contact@gmail.com' => 'O\'Stan'])
+                ->setTo($userEmail);
+
+                $message->setBody(
+                    $this->renderView(
+                        // templates/emails/registration.html.twig
+                        'emails/registration.html.twig',
+                        ['username' => $username]
+                    ),
+                    'text/html'
+                );
+                $mailer->send($message);
+
                 return $guardHandler->authenticateUserAndHandleSuccess(
                     $user,
                     $request,
@@ -99,7 +119,7 @@ class RegistrationController extends AbstractController
             else{
                 $this->addFlash(
                     'editorregister',
-                    'Merci pour votre inscription ! En tant qu\'éditeur, votre compte va devoir être examiné rapidement par notre équipe ! Vous pourrez ensuite vous connecter.'
+                    'Merci pour votre inscription ! En tant qu\'éditeur, votre compte va devoir être examiné par notre équipe qui vous enverra un mail lorsque celui-ci sera validé ! Vous pourrez ensuite vous connecter.'
                 );
             }
         }

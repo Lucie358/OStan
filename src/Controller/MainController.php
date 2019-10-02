@@ -28,19 +28,38 @@ class MainController extends AbstractController
       /**
      * @Route("/contact", name="contact")
      */
-    public function contact(Request $request)
+    public function contact(Request $request, \Swift_Mailer $mailer)
     {
-        $message = new Message();
 
-            $form = $this->createForm(ContactType::class, $message);
+            $form = $this->createForm(ContactType::class);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                $userMail= $form->get('Mail')->getData();
+                $userFirstname = $form->get('Firstname')->getData();
+                $userLastname = $form->get('Lastname')->getData();
+                $userMessage = $form->get('Message')->getData();
+                $userObject = $form->get('Object')->getData();
 
 
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($message);
-                $entityManager->flush();
+
+                $message = (new \Swift_Message($userObject))
+                ->setFrom($userMail)
+                ->setTo('ostan.contact@gmail.com');
+
+                $message->setBody(
+                    $this->renderView(
+                        // templates/emails/contactAdmin.html.twig
+                        'emails/contactAdmin.html.twig',
+                        ['firstname' => $userFirstname,
+                        'lastname'=>$userLastname,
+                        'message'=>$userMessage,
+                        'mail'=>$userMail]
+                    ),
+                    'text/html'
+                );
+                $mailer->send($message);
+
                 return $this->redirectToRoute('advice_post');
             }
 

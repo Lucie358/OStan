@@ -46,7 +46,7 @@ class RegistrationFormType extends AbstractType
                     new NotBlank([
                         'message' => 'Votre avatar ne doit pas être vide',
                     ]),
-                ],                
+                ],
             ])
 
             ->add('firstname', TextType::class, [
@@ -71,13 +71,13 @@ class RegistrationFormType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Description *',
-                    'cols' => '50', 
+                    'cols' => '50',
                     'rows' => '5'
                 ],
             ])
 
             ->add('birthdate', BirthdayType::class, [
-                'years' => range(1940,2019),
+                'years' => range(1940, 2019),
                 'widget' => 'choice',
                 'label' => 'Date de naissance: *',
             ])
@@ -137,6 +137,7 @@ class RegistrationFormType extends AbstractType
             ->add('tags', EntityType::class, [
                 'class' => Tag::class,
                 'multiple' => true,
+                'help' => 'Choisissez entre 1 et 5 tags maximum.',
                 'attr' => ['class' => 'custom-control custom-checkbox'],
                 'label_attr' => array('class' => 'pure-material-checkbox'),
                 'query_builder' => function (TagRepository $er) {
@@ -144,16 +145,20 @@ class RegistrationFormType extends AbstractType
                         ->orderBy('t.name', 'ASC');
                 },
             ])
-            ->add('siret', NumberType::class,[
+            ->add('siret', NumberType::class, [
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Siret *'
-                ],])
-                ->add('companyname', TextType::class,[
-                    'label' => false,
-                    'attr' => [
-                        'placeholder' => 'Nom de l\'entreprise *'
-                    ],])
+                ],
+            ])
+            ->add('companyname', TextType::class, [
+                'label' => false,
+                'help' => 'En tant qu\'éditeur votre inscription sera rapidement examinée par notre équipe et votre compte ne sera utilisable que lorsqu\'il sera validé',
+
+                'attr' => [
+                    'placeholder' => 'Nom de l\'entreprise *'
+                ],
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'label' => 'Accepter les conditions générales d\'utilisation',
@@ -162,8 +167,7 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Vous devez accepter les conditions générales d\'utilisation pour continuer.',
                     ]),
                 ],
-            ]);           
-
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
