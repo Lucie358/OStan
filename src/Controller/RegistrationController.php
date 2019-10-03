@@ -63,7 +63,7 @@ class RegistrationController extends AbstractController
             foreach ($user->getJobs() as $job) {
                 if ($job->getName() == "Editeur") {
                     $user->setIsActive(false);
-                }else{
+                } else {
                     $user->setIsActive(true);
                 }
 
@@ -93,11 +93,11 @@ class RegistrationController extends AbstractController
             if ($user->getIsActive() == true) {
                 $userEmail = $user->getEmail();
                 $username = $user->getUsername();
-                                     
+
 
                 $message = (new \Swift_Message('Bienvenue sur O\'Stan !'))
-                ->setFrom(['ostan.contact@gmail.com' => 'O\'Stan'])
-                ->setTo($userEmail);
+                    ->setFrom(['ostan.contact@gmail.com' => 'O\'Stan'])
+                    ->setTo($userEmail);
 
                 $message->setBody(
                     $this->renderView(
@@ -115,8 +115,7 @@ class RegistrationController extends AbstractController
                     $authenticator,
                     'main' // firewall name in security.yaml
                 );
-            }
-            else{
+            } else {
                 $this->addFlash(
                     'editorregister',
                     'Merci pour votre inscription ! En tant qu\'éditeur, votre compte va devoir être examiné par notre équipe qui vous enverra un mail lorsque celui-ci sera validé ! Vous pourrez ensuite vous connecter.'
