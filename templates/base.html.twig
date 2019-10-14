@@ -2,6 +2,8 @@
 <html>
     <head>
         <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <title>
             {% block title %}Welcome!
             {% endblock %}
@@ -56,7 +58,7 @@
             <div class="jumbotron">
 
                 <a href="{{path('advice_post')}}">
-                    <img class='logo' src="{{asset('images/logo.svg')}}" alt="logo du site">
+                    <img class='logo' src="{{asset('images/logo.svg')}}" alt="logo du site, représentant Stan Lee">
                 </a>
                 <h2 class="title_home">Bienvenue sur O'Stan !</h2>
             <p class="presentation">Le site de rencontre entre éditeurs, illustrateurs et auteurs passionnés qui souhaitent collaborer ensemble autour d'un nouveau projet ! </p>
@@ -65,11 +67,19 @@
                     {# Si je suis authentifié #}
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         {% if is_granted('ROLE_USER_ADMIN') %}
-                            <a class="nav-link" href="{{path('backend_adList')}}">Admin</a>
+                            <a class="nav-link d-none d-lg-block" href="{{path('backend_adList')}}">Admin</a>
+                            <a title="Admin"class="nav-link d-block d-lg-none" href="{{path('backend_adList')}}"><i class="fas fa-tools"></i></a>
+
                         {% endif %}
-                        <a class="nav-link" href="{{path('message') }}">Messagerie</a>
-                        <a class="nav-link" href="{{path('user_show', {'slug': app.user.slug }) }}">Mon profil</a>
-                        <a class="nav-link nav-link-logout" href="{{path('app_logout')}}">Déconnexion</a>
+                        <a class="nav-link d-none d-lg-block" href="{{path('message') }}">Messagerie</a>
+                        <a title="Messagerie" class="nav-link d-block d-lg-none" href="{{path('message') }}"><i class="fas fa-envelope"></i></a>
+
+                        <a class="nav-link d-none d-lg-block" href="{{path('user_show', {'slug': app.user.slug }) }}">Mon profil</a>
+                        <a title="Mon profil" class="nav-link d-block d-lg-none" href="{{path('user_show', {'slug': app.user.slug }) }}"><i class="fas fa-id-card"></i></a>
+
+                        <a class="nav-link nav-link-logout d-none d-lg-block" href="{{path('app_logout')}}">Déconnexion</a>
+                        <a title= "Déconnexion" class="nav-link nav-link-logout d-block d-lg-none" href="{{path('app_logout')}}"><i class="fas fa-sign-out-alt"></i></a>
+
                     {% else %}
                         <a class="nav-link" href="{{path('app_login')}}">Connexion</a>
                         <a class="nav-link" href="{{path('app_register')}}">Inscription</a>
@@ -83,7 +93,7 @@
         {% block body %}
             <div class="body">
                 {% block sidebar %}
-                    <div class="d-none d-lg-block sidebar">
+                    <div class="sidebar">
 
                         <div class="d-flex align-items-center justify-content-center">
                             <button type="button" class="btn btn-link btn-social"><i class="fab fa-twitter"></i></button>
@@ -91,8 +101,9 @@
                             <button type="button" class="btn btn-link btn-social"><i class="fab fa-instagram"></i></button>
                         </div>
 
-                        <div>
-                            <h4 class="title-sidebar">Les dernières annonces</h4>
+                        <h4 class="title-sidebar">Les dernières annonces</h4>
+						<div class="d-flex flex-wrap d-lg-block">
+                            
                             {{render(controller(
                                 'App\\Controller\\PostController::adPostsNavList'
                             ))}}

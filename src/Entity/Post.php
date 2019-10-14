@@ -23,6 +23,12 @@ class Post
 
     /**
      * @ORM\Column(type="string", length=100)
+	 * @Assert\Length(
+     *      min = 3,
+     *      max = 100,
+     *      minMessage = "Votre titre d'annonce est trop court, il doit contenir au moins {{ limit }} caractères",
+     *      maxMessage = "Votre titre d'annonce est trop long, il doit contenir maximum {{ limit }} caractères"
+     * )
      */
     private $title;
 

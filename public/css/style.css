@@ -6,6 +6,10 @@ a {
   color: black;
 }
 
+article{
+	margin-left: 0;
+}
+
 .body {
   display: flex;
   /* margin-top: 20px;
@@ -470,14 +474,14 @@ footer {
 }
 
 .adCard .adTags{
-  margin: 50px 0 10px 20px;
+  margin: 9px 0 9px 0px;
 
 
 }
 .title-card {
-  position: absolute;
+  position: relative;
     top: 7px;
-    left: -27px;
+    left: -36px;
     text-align: left;
     background: #3f729b;
     /* background: #3f729b; */
@@ -487,7 +491,8 @@ footer {
     color: #ffffff;
     font-weight: 100;
     font-size: 1.3em;
-    padding: 4px 12px;
+	padding: 4px 12px;
+	margin-bottom: 5px;
 }
 .title-card:before {
   content: "";
@@ -520,7 +525,6 @@ footer {
 }
 
 article {
-  margin-left: 30px;
   border: lightgray;
   margin-top: 40px;
   border: 1px solid #b3b3b338;
@@ -890,7 +894,6 @@ ul {
   position: relative;
   background: rgba(92, 152, 255, 0);
   overflow: hidden;
-  margin: 0px 0px 25px 30px;
   box-shadow: 0px 0px 3px 0px black;
   padding: 5px;
 }
@@ -999,4 +1002,82 @@ ul {
 
 .user-card {
   position: relative;
+  margin-left: 10px;
 }
+
+
+
+
+
+
+/***************** RESPONSIVE ******************/
+/****** Mobile ******/
+@media (max-width: 768px) {
+  .logo{
+	  display: none;
+  }
+  /* .body{
+	  display:block;
+  } */
+  .presentation{
+	  width: 100%;
+	  border-radius: 0;
+  }
+   .body{
+	   flex-direction: column;
+   }
+
+  .title-card{
+	  position: initial;
+	  width: 100%;
+	  border-radius: 0;
+  }
+  .title-card:before{
+	  display: none;
+  }
+
+  .section-post .imgWrapper{
+	flex-shrink: 0;
+    max-width: 140px;
+    /* max-height: 300px; */
+    float: left;
+    margin: 0px 10px 0px 0px;
+  }
+
+  .profil-avatar{
+	width: 55%;
+  }
+
+
+  .sidebar{
+    box-shadow: 1px 1px 15px #4242425e;
+    width:100%;
+    /* margin-left: 15px; */
+    background: #3f729bad;
+	flex-shrink: 0;
+	order:2;
+  }
+  .sidebar-search{
+	max-width: 100%;
+	position: initial;
+  }
+
+  .card-sidebar{
+	width: 50%;
+	margin:0;
+	padding:0;
+	
+  }
+  .userCard{
+	width: 50%;
+	margin:0;
+	padding:0;
+  }
+
+  .mask-2 {
+	  width: 60px;
+	  height:60px;
+  }
+  
+}
+

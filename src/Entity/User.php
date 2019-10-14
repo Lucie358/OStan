@@ -159,11 +159,7 @@ class User implements AdvancedUserInterface, \Serializable, EquatableInterface
      */
     private $messagesReceived;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Status", inversedBy="users")
-     */
-    private $status;
-
+    
     /**
      * @ORM\Column(type="string", length=110)
      */
@@ -644,17 +640,7 @@ class User implements AdvancedUserInterface, \Serializable, EquatableInterface
         return $this;
     }
 
-    public function getStatus(): ?Status
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?Status $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
+   
 
     /**
      * @see UserInterface
