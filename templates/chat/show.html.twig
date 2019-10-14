@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %} {% block body %} {#
+<div class="form_message">
+  {{
+    include("message/_form.html.twig", {
+      button_label: "Créer un nouveau message"
+    })
+  }}
+</div>
+#}
+
+<div id="messages">
+  <ul>
+    {% for message in messages %}
+    <li>{{ message.user.username }}: {{ message.content }}</li>
+    {% endfor %}
+  </ul>
+
+  <form id="chatbox">
+    <input type="text" name="message_content" />
+  </form>
+</div>
+
+{% endblock %} {% block javascripts %}
+<script>
+  const url = new URL("http://localhost:3000/hub");
+  url.searchParams.append("topic", "http://o-stan.fr/chat");
+  const eventSource = new EventSource(url, { withCredentials: true });
+
+  eventSource.onmessage = function(mercureReceiveEvent) {
+    console.log(mercureReceiveEvent);
+    const data = JSON.parse(mercureReceiveEvent.data);
+    if (
+      data.from.id + "" === "{{receiver.id}}" ||
+      data.from.id + "" === "{{app.user.id}}"
+    ) {
+      $("#messages ul").append(
+        "<li>" + data.from.username + ": " + data.message + "</li>"
+      );
+    } else {
+      toastr.success(data.from.username + " vous a envoyé un message.");
+    }
+  };
+
+  const postMessageUrl = "{{ path('postMessage', { user: receiver.id }) }}";
+
+  $("#chatbox").on("submit", function(submitEvent) {
+    submitEvent.preventDefault();
+    console.log(postMessageUrl);
+
+    const formData = new FormData(document.querySelector("#chatbox"));
+
+    console.log(formData);
+    console.log(formData.get("message_content"));
+    $.ajax({
+      method: "POST",
+      url: postMessageUrl,
+      data: {
+        message: formData.get("message_content")
+      }
+    });
+  });
+</script>
+{% endblock %}

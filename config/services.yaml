@@ -48,3 +48,12 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
+
+    App\Service\MercureCookieGenerator:
+        arguments:
+            $secret: '%env(MERCURE_JWT_KEY)%'
+
+
+    App\Service\MercureJwtProvider:
+        arguments:
+            $secret: '%env(MERCURE_JWT_KEY)%'

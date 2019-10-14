@@ -39,14 +39,37 @@ class MessageRepository extends ServiceEntityRepository
     }
 
 
-    public function findByTitle($title)
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.title = :val')
-            ->setParameter('val', $title)
+    // public function findBySlug($slug)
+    // {
+    //     return $this->createQueryBuilder('m')
+    //         ->andWhere('m.slug = :val')
+    //         ->setParameter('val', $slug)
+    //         ->orderBy('m.createdAt', 'DESC')
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
+
+    public function findConversation($user1, $user2) {
+        $qb = $this->createQueryBuilder('m');
+
+        $qb->where($qb->expr()->andX(
+                $qb->expr()->eq('m.user', ':user1'),
+                $qb->expr()->eq('m.userReceiver', ':user2')
+            ))
+            ->setParameter('user1', $user1)
+            ->setParameter('user2', $user2)
+
+            ->orWhere($qb->expr()->andX(
+                $qb->expr()->eq('m.user', ':user2'),
+                $qb->expr()->eq('m.userReceiver', ':user1')
+            ))
+            ->setParameter('user1', $user1)
+            ->setParameter('user2', $user2)
+
             ->orderBy('m.createdAt', 'DESC')
-            ->getQuery()
-            ->getResult()
         ;
+
+        return $qb->getQuery()->getResult();
     }
 }
