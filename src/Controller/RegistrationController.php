@@ -25,8 +25,7 @@ class RegistrationController extends AbstractController
     {
         $code = 'ROLE_USER_USER';
         $defaultRole = $roleRepository->findOneByCode($code);
-        $statusCode = 'UNBLOCKED';
-        $statusCode = $statusRepository->findOneByCode($statusCode);
+        
 
 
         $user = new User();
@@ -58,7 +57,6 @@ class RegistrationController extends AbstractController
             }
 
 
-            $user->setStatus($statusCode);
             $user->setRole($defaultRole);
             foreach ($user->getJobs() as $job) {
                 if ($job->getName() == "Editeur") {

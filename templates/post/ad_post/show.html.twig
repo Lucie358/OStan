@@ -58,7 +58,7 @@
             {% endif %}
 
             <div class="metadata mx-3 mb-3 d-flex justify-content-between">
-                <div class="d-flex justify-content-start">
+                <div class="d-flex justify-content-start align-items-baseline">
                     {% for tag in post.tags %}
                         <a href="{{ path('tag_show', {'slug': tag.slug }) }}" class="badge badge-pill amber lighten-2 mr-1">{{ tag.name }}</a>
                     {% endfor %}

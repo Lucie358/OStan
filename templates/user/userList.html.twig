@@ -18,7 +18,7 @@
 
     {% for user in users %}
         {# Si le status de l'utilisateur est UNBLOCKED, alors tu les affiches. #}
-        {% if user.status.code == "UNBLOCKED" %}
+        {% if user.isAccountNonLocked == true %}
             <article class="pt-3 pb-1 tri-right user-card">
                 <div class="d-flex flex-row">
 

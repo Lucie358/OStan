@@ -1,26 +1,22 @@
-{% extends 'base.html.twig' %} {% block body %}
+{% extends 'base.html.twig' %}
+{% block body %}
 
-<h1>Chat example</h1>
+    <h1>Messagerie</h1>
 
-{#
-<form id="chatBox">
-  <input
-    name="message"
-    placeholder="Your message..."
-    size="50"
-    autocomplete="off"
-  />
-  <input type="submit" />
-</form>
-#}
+    <h2>Choissiez un utilisateur avec qui vous souhaitez discuter</h2>
+    
+    <select class="custom-select" onChange="window.location.href=this.value">
+        <option selected>Utilisateurs:</option>
+        {% for user in users %}
+            <option value="{{ path('showmessagechat', {'id': user.id}) }}">{{user.username}}
+            </option>
+        {% endfor %}
+    </select>
 
-<ul>
-  {% for user in users %}
-    <li><a href="{{ path('showmessagechat', {'id': user.id}) }}">{{user.username}}</a></li>
-  {% endfor %}
-</ul>
+	<h2>Vos conversations: </h2>
 
-{% endblock %} {# {% block javascripts %}
+{% endblock %}
+{# {% block javascripts %}
 <script>
   const url = new URL("http://localhost:3000/hub");
   url.searchParams.append("topic", "http://o-stan.fr/chat");
@@ -51,4 +47,5 @@
     });
   });
 </script>
-#} {# {% endblock %} #}
+#}
+{# {% endblock %} #}

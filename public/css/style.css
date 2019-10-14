@@ -6,6 +6,10 @@ a {
 	color: black;
 }
 
+article {
+	margin-left: 0;
+}
+
 .body {
 	display: flex;
 	/* margin-top: 20px;
@@ -28,6 +32,12 @@ a:focus {
 
 footer {
 	margin-top: auto;
+}
+.navbar-footer {
+	display: flex;
+	margin-bottom: 0;
+	list-style: none;
+	flex-wrap: wrap;
 }
 .img-stan {
 	width: 250px;
@@ -284,10 +294,8 @@ footer {
 }
 
 .mask div {
-	width: 100%;
-	height: 100%;
-	border-radius: 50%;
-	overflow: hidden;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 .image-gallery {
@@ -322,12 +330,9 @@ footer {
 .mask {
 	width: 250px;
 	height: 250px;
-	/* overflow: hidden; */
-	/* border-radius: 50%; */
 	position: relative;
 	top: 70px;
 	margin: 0 auto;
-	/* box-shadow: 0 0 4px black; */
 }
 
 /* Pour la page Tag */
@@ -345,7 +350,6 @@ footer {
 
 .profil-card {
 	text-align: center;
-	margin: 0px 20%;
 	position: relative;
 }
 
@@ -387,8 +391,6 @@ footer {
 	display: flex;
 	flex-direction: column;
 	margin-top: 20px;
-	margin-left: 20%;
-	margin-right: 20%;
 }
 
 /* ****SIDEBAR**** */
@@ -444,6 +446,8 @@ footer {
 .userCard {
 	box-shadow: none;
 	border: none;
+	margin-top:15px;
+
 }
 .userCard > a {
 	text-align: left;
@@ -470,12 +474,12 @@ footer {
 }
 
 .adCard .adTags {
-	margin: 50px 0 10px 20px;
+	margin: 9px 0 9px 0px;
 }
 .title-card {
-	position: absolute;
+	position: relative;
 	top: 7px;
-	left: -27px;
+	left: -36px;
 	text-align: left;
 	background: #3f729b;
 	/* background: #3f729b; */
@@ -486,6 +490,7 @@ footer {
 	font-weight: 100;
 	font-size: 1.3em;
 	padding: 4px 12px;
+	margin-bottom: 5px;
 }
 .title-card:before {
 	content: "";
@@ -515,10 +520,10 @@ footer {
 	margin-bottom: 10px;
 	display: flex;
 	justify-content: space-between;
+	flex-wrap: wrap;
 }
 
 article {
-	margin-left: 30px;
 	border: lightgray;
 	margin-top: 40px;
 	border: 1px solid #b3b3b338;
@@ -696,179 +701,13 @@ ul {
 
 /************ MESSAGERIE ***********/
 
-.message-detail {
-	/* padding: 100px; */
-	border-radius: 10px;
-	/* background-color: #eaecee; */
-	/* border: #abb2b9 1px solid; */
-	margin-top: 100px;
-	/* width: 75%; */
-	box-shadow: 0 0 11px #8e8e8e40;
-}
-
-.message-title {
-	position: relative;
-	top: -36px;
-	box-shadow: 0 0 8px #00000024;
-	border-radius: 10px;
-	padding: 5px;
-	background-color: white;
-	text-align: center;
-	width: 70%;
-	margin: auto;
-	word-break: break-all;
-}
-.title-message {
-	word-break: break-all;
-	font-weight: bold;
-	font-size: 1.2em;
-}
-
-.message-response {
-	border: #abb2b9 1px solid;
-	border-radius: 10px;
-	background-color: #eaecee;
-	padding: 5px;
-}
-
-.message-response-title {
-	border: #abb2b9 1px solid;
-	border-radius: 10px;
-	background-color: #eaecee;
-	padding: 5px;
-	text-align: center;
-}
-
-.message-author {
-	font-style: italic;
-	color: grey;
-	font-size: 0.9em;
-	text-align: end;
-	margin-right: 60px;
-}
-
-.message-author-response {
-	font-style: italic;
-	color: grey;
-	font-size: 0.9em;
-	text-align: start;
-	margin-left: 30px;
-}
-
-.form_message {
-	width: 56%;
-	margin: 34px auto;
-}
-
-.message-option {
-	text-align: center;
-}
-
-.message-user {
-	border-radius: 10px;
-	margin: 45px;
-	margin-top: 60px;
-	padding: 0px 20px;
-	box-shadow: 0 0 5px #00000026;
-}
-
-.msg {
-	overflow-y: scroll;
-	height: 100vh;
-}
-
-.btn-msg-back {
-	width: 30%;
-	margin: 5px auto;
-}
-
-.message-content {
-	padding: 10px;
-	margin: 10px;
-}
-.messages {
-	overflow-y: scroll;
-	height: 100vh;
-}
-
-/***** bulle de message *****/
-.talk-bubble {
-	margin: 10px;
-	height: auto;
-	background-color: white;
-	box-shadow: 1px 2px 8px #8080803d;
-}
-
-.round {
-	border-radius: 30px;
-	-webkit-border-radius: 30px;
-	-moz-border-radius: 30px;
-}
-
-/* talk bubble contents */
-.talktext {
-	padding: 1em;
-	text-align: center;
-	line-height: 1.5em;
-	margin: 2em;
-}
-
-/*** SHOW MESSAGE ****/
-
-.send-bubble {
-	margin: 40px;
-	position: relative;
-	width: 100%;
-	height: auto;
-	background-color: white;
-	box-shadow: 10px 5px 5px grey;
-}
-
-.tri-right.btm-right-send:after {
-	content: " ";
-	position: absolute;
-	width: 0;
-	height: 0px;
-	left: auto;
-	right: 0px;
-	top: auto;
-	bottom: -20px;
-	border: 22px solid;
-	border-color: transparent transparent transparent #f8f7e0;
-}
-
-.bubble-send {
-	margin: 40px;
-	position: relative;
-	width: 60%;
-	height: auto;
-	background-color: #ccc93226;
-	box-shadow: -3px 5px 10px #8080802b;
-
-	right: -35%;
-}
-
-.tri-right.btm-left-response:after {
-	content: " ";
-	position: absolute;
-	width: 0;
-	height: 0px;
-	left: 10px;
-	right: auto;
-	top: auto;
-	bottom: -20px;
-	border: 22px solid;
-	border-color: transparent transparent transparent #e0e9f8;
-}
-
-.bubble-response {
-	margin: 40px;
-	position: relative;
-	width: 60%;
-	height: auto;
-	background-color: #326ecc26;
-	box-shadow: -10px 12px 10px #80808033;
-	/* border: 1px solid red; */
+.custom-select {
+	display: inline-block;
+	border-radius: 0;
+	width: initial;
+	border: none;
+	border-bottom: 1px solid #b7b7b7;
+	margin-bottom: 15px;
 }
 
 /**** FIN MESSAGERIE ****/
@@ -886,7 +725,6 @@ ul {
 	position: relative;
 	background: rgba(92, 152, 255, 0);
 	overflow: hidden;
-	margin: 0px 0px 25px 30px;
 	box-shadow: 0px 0px 3px 0px black;
 	padding: 5px;
 }
@@ -995,10 +833,11 @@ ul {
 
 .user-card {
 	position: relative;
+	margin-left: 10px;
 }
 
 .lightbox {
-	width: 50%;
+	width: 32%;
 }
 #lightbox {
 	position: fixed; /* La lightbox apparaît avant la fermeture de la balise <body> ce qui facilite son positionnement */
@@ -1027,4 +866,82 @@ ul {
 		255
 	); /* Mise en place d'un fond au cas où l'image soit en transparence */
 	box-shadow: rgba(0, 0, 0, 0.8) 0 0 16px;
+}
+
+/***************** RESPONSIVE ******************/
+/****** Mobile ******/
+@media (max-width: 768px) {
+	.logo {
+		display: none;
+	}
+	/* .body{
+		display:block;
+	} */
+	.presentation {
+		width: 100%;
+		border-radius: 0;
+	}
+	.body {
+		flex-direction: column;
+	}
+
+	.title-card {
+		position: initial;
+		width: 100%;
+		border-radius: 0;
+	}
+	.title-card:before {
+		display: none;
+	}
+
+	.section-post .imgWrapper {
+		flex-shrink: 0;
+		max-width: 140px;
+		/* max-height: 300px; */
+		float: left;
+		margin: 0px 10px 0px 0px;
+	}
+
+	
+
+	.sidebar {
+		box-shadow: 1px 1px 15px #4242425e;
+		width: 100%;
+		/* margin-left: 15px; */
+		background: #3f729bad;
+		flex-shrink: 0;
+		order: 2;
+	}
+
+	
+	.sidebar-search {
+		max-width: 80%;
+		position: initial;
+		margin: auto;
+		margin-top: 40px;
+		margin-bottom: 20px;
+	}
+
+	.card-sidebar {
+		width: 80%;
+		margin: auto;
+		padding: 0;
+	}
+	
+
+	.mask-2 {
+		width: 60px;
+		height: 60px;
+	}
+
+	.profil-avatar-3 {
+		width: 90px;
+	}
+	.mask{
+	width: 200px;
+    height: 200px;
+    position: relative;
+    top: 80px;
+    margin: 0 auto;
+	}
 }
