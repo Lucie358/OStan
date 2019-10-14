@@ -1,0 +1,32 @@
+{# templates/emails/registration.html.twig #}
+
+<img
+  
+  src="{{ absolute_url(asset('images/stanlix.png')) }}"
+  alt="logo stanlix"
+  style="width: 50px;"
+/>
+
+<p>
+  Bonjour <span style="font-weight: bold;">{{ username }}</span>! Nous tenions à t'informer que ton compte à bien été
+  enregistré.
+</p>
+<div style="margin-top: 20px; margin-bottom: 15px;">
+  <p style="margin-top: 0px; margin-bottom: 0px;">
+    Dés à présent, tu vas pouvoir rechercher un talent en particulier et
+    collaborer avec ce dernier, ou bien te proposer en tant que tel sur O'Stan.
+  </p>
+  <p style="margin-top: 0px; margin-bottom: 0px;">
+    N'h'ésites pas à te rendre sur notre page des articles pour apprendre à
+    utiliser le site ou à nous contacter si tu rencontres des difficultés !
+  </p>
+</div>
+{# example, assuming you have a route named "login" #}
+<p>
+  Pour te connecter, rendez-vous ici:
+  <a href="{{ url('app_login') }}">Je me connecte !</a>.
+</p>
+
+<p>Merci, à bientôt !</p>
+
+<p style="font-style: italic; font-size: 0.9em;">Lucie de O'Stan.</p>

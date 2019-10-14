@@ -71,14 +71,7 @@ class PostController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/searchUser", name="searchUser")
-     */
-    public function searchUser(Request $request)
-    {
-        dump($request->request);
-        die;
-    }
+
 
     /**
      * Page de détail d'un ARTICLE DE CONSEILS (pas de possibilité de commenter) :
