@@ -63,6 +63,8 @@ class RegistrationController extends AbstractController
             foreach ($user->getJobs() as $job) {
                 if ($job->getName() == "Editeur") {
                     $user->setIsActive(false);
+                } else{
+                    $user->setIsActive(true);
                 }
 
                 # code...

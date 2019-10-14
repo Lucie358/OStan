@@ -1,5 +1,5 @@
 
-{{ form_start(form) }}
+{{ form_start(form, {'attr': {'id': 'chatbox'}}) }}
     {{ form_widget(form) }}
     <button class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
