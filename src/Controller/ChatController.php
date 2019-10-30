@@ -23,38 +23,26 @@ class ChatController extends AbstractController
      */
     public function index(UserRepository $userRepository, Request $request, MessageRepository $messageRepository, Slugger $slugger)
     {
-        $users = $userRepository->findAll();
-
-        //     $message = new Message();
-        //     $form = $this->createForm(MessageType::class, $message);
-        //     $form->handleRequest($request);
-
-        //     if ($form->isSubmitted() && $form->isValid()) {
-        //         // récupérer l'utilisateur actuel
-        //         $user = $this->getUser();
-
-
-        //         // attribuer au message l'auteur du nouveau message
-        //         $message->setUser($user);
-        //         $slug = $slugger->slugify($message->getTitle());
-        //         $message->setSlug($slug);
-
-        //         $entityManager = $this->getDoctrine()->getManager();
-        //         $entityManager->persist($message);
-        //         $entityManager->flush();
-        //         return $this->redirectToRoute('showmessagechat', ['slug' => $message->getSlug()]);
-        //     }
-        //     // récupérer l'utilisateur actuel
-        //     $user = $this->getUser();
-
-        //     // afficher les messages
-        //    $messages = $messageRepository->findByTitleGroup($message->getTitle());
+		$users = $userRepository->findAll(); 
+		
+		
+			$currentUser =  $this->getUser();
+			$conversations = $messageRepository->findByConversation($currentUser);			
+			
+			
+		
+		
+		dump($conversations);
+		
+		
 
 
         return $this->render('chat/index.html.twig', [
             //    'messages' => $messages, 
             //    'form' => $form->createView()
-            'users' => $users
+			'users' => $users,
+			'conversations'=>$conversations,
+			'currentUser'=>$currentUser
 
 
         ]);

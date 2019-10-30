@@ -67,7 +67,7 @@
                         {% if is_granted('ROLE_USER_ADMIN') %}
                             <a class="nav-link" href="{{path('backend_adList')}}">Admin</a>
                         {% endif %}
-                        <a class="nav-link" href="{{path('message') }}">Messagerie</a>
+                        <a class="nav-link" href="{{path('chat') }}">Messagerie</a>
                         <a class="nav-link" href="{{path('user_show', {'slug': app.user.slug }) }}">Mon profil</a>
                         <a class="nav-link nav-link-logout" href="{{path('app_logout')}}">Déconnexion</a>
                     {% else %}

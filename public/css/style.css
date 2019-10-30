@@ -1028,3 +1028,8 @@ ul {
 	); /* Mise en place d'un fond au cas où l'image soit en transparence */
 	box-shadow: rgba(0, 0, 0, 0.8) 0 0 16px;
 }
+.scrollable-menu {
+    height: auto;
+    max-height: 300px;
+    overflow-x: hidden;
+}

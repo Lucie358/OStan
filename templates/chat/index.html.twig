@@ -4,51 +4,65 @@
 
 {#
 <form id="chatBox">
-  <input
-    name="message"
-    placeholder="Your message..."
-    size="50"
-    autocomplete="off"
-  />
-  <input type="submit" />
+	<input
+		name="message"
+		placeholder="Your message..."
+		size="50"
+		autocomplete="off"
+	/>
+	<input type="submit" />
 </form>
 #}
 
 <ul>
-  {% for user in users %}
-    <li><a href="{{ path('showmessagechat', {'id': user.id}) }}">{{user.username}}</a></li>
-  {% endfor %}
+	{% for conversation in conversations %} {% if conversation.user.username ==
+	currentUser %}
+	<li>{{ conversation.userReceiver.username }}</li>
+	{% endif %} {% if conversation.userReceiver.username == currentUser %}
+	<li>{{ conversation.user.username }}</li>
+	{% endif %} {% endfor %}
 </ul>
+
+
+<div class="btn-group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Envoyer un message à ... <span class="caret"></span></button>
+		<ul class="dropdown-menu scrollable-menu" role="menu">
+				{% for user in users %}
+				<li><a class="dropdown-item" href="{{ path('showmessagechat', { id: user.id }) }}" >{{ user.username }} </a></li>
+				{% endfor %}
+			
+		</ul>
+	</div>
 
 {% endblock %} {# {% block javascripts %}
 <script>
-  const url = new URL("http://localhost:3000/hub");
-  url.searchParams.append("topic", "http://o-stan.fr/chat");
-  const eventSource = new EventSource(url, { withCredentials: true });
+	const url = new URL("http://localhost:3000/hub");
+	url.searchParams.append("topic", "http://o-stan.fr/chat");
+	const eventSource = new EventSource(url, { withCredentials: true });
 
-  eventSource.onmessage = function(mercureReceiveEvent) {
-    console.log(mercureReceiveEvent);
-    const data = JSON.parse(mercureReceiveEvent.data);
-    const messagesUl = document.querySelector("#messages ul");
-    let newLi = document.createElement("li");
-    newLi.innerHTML = data.message;
-    messagesUl.appendChild(newLi);
-  };
+	eventSource.onmessage = function(mercureReceiveEvent) {
+		console.log(mercureReceiveEvent);
+		const data = JSON.parse(mercureReceiveEvent.data);
+		const messagesUl = document.querySelector("#messages ul");
+		let newLi = document.createElement("li");
+		newLi.innerHTML = data.message;
+		messagesUl.appendChild(newLi);
+	};
 
-  const postMessageUrl = "{{ path('postMessage', { user: app.user.id }) }}";
+	const postMessageUrl = "{{ path('postMessage', { user: app.user.id }) }}";
 
-  $("#message").on("submit", function(submitEvent) {
-    submitEvent.preventDefault();
-    console.log(postMessageUrl);
+	$("#message").on("submit", function(submitEvent) {
+		submitEvent.preventDefault();
+		console.log(postMessageUrl);
 
-    const formData = new FormData(document.querySelector("#chatBox"));
-    $.ajax({
-      method: "POST",
-      url: postMessageUrl,
-      data: {
-        message: formData.get("message")
-      }
-    });
-  });
+		const formData = new FormData(document.querySelector("#chatBox"));
+		$.ajax({
+			method: "POST",
+			url: postMessageUrl,
+			data: {
+				message: formData.get("message")
+			}
+		});
+	});
 </script>
 #} {# {% endblock %} #}
