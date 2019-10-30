@@ -30,23 +30,18 @@
             </div>
 
             <div class="card-body d-flex justify-content-around flex-wrap">
-                <div class="container1">
-                    <img class="img-advicepost" src="{{ asset(picture_upload_path ~ (post.picture1 ?: 'marvel.jpg')) }}"  style="max-width:100%;cursor:pointer" onclick="onClick(this)">
+                <div class="lightbox">
+                    <img class="img-advicepost" src="{{ asset(picture_upload_path ~ (post.picture1 ?: 'marvel.jpg')) }}"  style="max-width:100%;cursor:pointer">
                 </div>
-                <div class="container1">
-                    <img class="img-advicepost" src="{{ asset(picture_upload_path ~ (post.picture2 ?: 'marvel.jpg')) }}"  style="max-width:100%;cursor:pointer" onclick="onClick(this)">
+                <div class="lightbox">
+                    <img class="img-advicepost" src="{{ asset(picture_upload_path ~ (post.picture2 ?: 'marvel.jpg')) }}"  style="max-width:100%;cursor:pointer" >
                 </div>
-                <div class="container1">
-                    <img class="img-advicepost" src="{{ asset(picture_upload_path ~ (post.picture3 ?: 'marvel.jpg')) }}"  style="max-width:100%;cursor:pointer" onclick="onClick(this)">
+                <div class="lightbox">
+                    <img class="img-advicepost" src="{{ asset(picture_upload_path ~ (post.picture3 ?: 'marvel.jpg')) }}"  style="max-width:100%;cursor:pointer" >
                 </div>
             </div>
 
-            <div id="modal01" class="modal" onclick="this.style.display='none'">
-                <span class="close">&times;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <div class="modal-cont">
-                    <img id="img01" style="max-width:100%">
-                </div>
-            </div>
+            
             {# Pour les paramètres de onclick, si le status du post est == a BLOCKED alors le param = UNBLOCKED #}
             {% if is_granted('ROLE_USER_ADMIN') %}
                 <button
@@ -57,7 +52,7 @@
                 </button>
             {% endif %}
 
-            <div class="metadata mx-3 mb-3 d-flex justify-content-between">
+            <div class="metadata mx-3 mb-3 d-flex justify-content-between flex-wrap">
                 <div class="d-flex justify-content-start align-items-baseline">
                     {% for tag in post.tags %}
                         <a href="{{ path('tag_show', {'slug': tag.slug }) }}" class="badge badge-pill amber lighten-2 mr-1">{{ tag.name }}</a>
@@ -191,5 +186,25 @@
                 }
             });
         }
-    </script>
+	</script>
+	<script>
+	$(document).ready(function() {
+		$(".lightbox img").click(function() {
+			var $body = $("body");
+			var $imgHref = $(this).attr("src");
+			var $lightbox = $('<div id="lightbox">');
+			var $lightboxImage = $("<img>").attr("src", $imgHref);
+			$lightbox.append($lightboxImage);
+			$lightbox.fadeIn(400);
+			$body.append($lightbox);
+			$("#lightbox").on("click", function(remove) { //Lorsque l'utilisateur clique en dehors de l'image, la lightbox se ferme et est supprimée
+				if (remove.target == this) { //La fermeture au clique ne fonctionne qu'en dehors de l'image
+					$lightbox.fadeOut(200, function() {
+						$("#lightbox").remove();
+					});
+				}
+			});
+		});
+	});
+ </script>
 {% endblock %}

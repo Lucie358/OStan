@@ -74,7 +74,7 @@ class PostController extends AbstractController
 
 
     /**
-     * Page de détail d'un ARTICLE DE CONSEILS (pas de possibilité de commenter) :
+     * Page de détail d'un ARTICLE DE CONSEILS :
      *
      * @Route("/advicepost/{slug}", name="advice_post_show", methods={"GET","POST"})
      */
@@ -132,7 +132,11 @@ class PostController extends AbstractController
             );
 
             return $this->redirectToRoute('ad_post_show', ['slug' => $post->getSlug()]);
-        }
+		}
+		if ($post->getStatus()->getCode() == "BLOCKED") {
+			throw $this->createNotFoundException('Annonce introuvable');
+		}
+
         return $this->render('post/ad_post/show.html.twig', [
             'post' => $post,
             'formComment' => $formComment->createView(),

@@ -667,8 +667,6 @@ ul {
 	max-width: 100%;
 	cursor: pointer;
 	object-fit: cover;
-	width: 400px;
-	height: 320px;
 	box-shadow: 0 0 8px #00000087;
 	margin-top: 10px;
 	margin-right: 5px;

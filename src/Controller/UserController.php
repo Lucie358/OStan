@@ -110,7 +110,10 @@ class UserController extends AbstractController
             );
 
             return $this->redirectToRoute('user_show', ['slug' => $user->getSlug()]);
-        }
+		}
+		if ($user->getIsAccountNonLocked() == false) {
+			throw $this->createNotFoundException('Utilisateur introuvable');
+		}
 
         return $this->render('user/show.html.twig', [
             'user' => $user,
@@ -127,31 +130,7 @@ class UserController extends AbstractController
     public function edit(Request $request, User $user, UserPasswordEncoderInterface $encoder, UserRepository $userRepository, Slugger $slugger): Response
     {
 
-        
-        // $job = new Job();
-
-        // $jobName = $job->getName();
-        // $job->setName($jobName);
-
-        // $formJob = $this->createForm(JobType::class, $job);
-        // $formJob->handleRequest($request);
-
-
-        // if ($formJob->isSubmitted() && $formJob->isValid()) {
-        //     $formName = $user->getName();
-        //     $criterias = $request->request->get($formName); 
-        //     $users = $userRepository->findJob($criterias);
-
-        //     $slug = $slugger->slugify($user->getUsername());
-        //     $user->setSlug($slug);
-            
-        //     $entityManager = $this->getDoctrine()->getManager();
-        //     $entityManager -> persist($job);
-        //     $entityManager -> flush();
-            
-           
-        //     return $this->redirectToRoute('user_show', ['slug' => $user->getSlug()]);
-        // }
+       
 
         //Je récupère l'ancien avatar
         $oldAvatar = $user->getAvatar();

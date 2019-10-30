@@ -20,7 +20,7 @@
 		{% if app.user %} {% if user.slug != app.user.slug %}
 		<a
 			class="btn btn-primary btn-msg animated rubberBand "
-			href="{{ path('newmessage') }} "
+			href="{{ path('showmessagechat', {'id': user.id}) }} "
 		>
 			<i class="far fa-envelope"></i>
 		</a>
@@ -156,7 +156,7 @@
 {% endblock %} {% block javascripts %}
 
 <!-- Lightbox -->
-// <script>
+ <script>
 	$(document).ready(function() {
 		$(".lightbox img").click(function() {
 			var $body = $("body");
