@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Utils\Slugger;
 use App\Entity\Message;
-use App\Form\MessageType;
 use App\Repository\UserRepository;
 use App\Repository\MessageRepository;
 use Symfony\Component\Mercure\Update;

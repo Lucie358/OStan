@@ -4,7 +4,7 @@ App\Entity\Tag:
     slug: "<word()>"
 
 App\Entity\User:
-  user{1..40}:
+  user{1..20}:
     username: "<userName()>"
     firstname: "<firstName()>"
     lastname: "<lastName()>"
@@ -16,7 +16,6 @@ App\Entity\User:
     address: "<address()>"
     description: <realText(200)>
     phonenumber: <randomNumber()>
-    status: "@status*"
     tags: "2x @tag*"
     jobs: "2x @job*"
     slug: "<word()>"
@@ -34,7 +33,7 @@ App\Entity\Role:
 
 
 App\Entity\Post:
-  post{1..35}:
+  post{1..20}:
     title: "<sentence()>"
     description: <realText(500)>
     user: "@user*"
@@ -44,7 +43,7 @@ App\Entity\Post:
     slug: "<word()>"
 
 App\Entity\Comment:
-  comment{1..45}:
+  comment{1..15}:
     description: "<realText()>"
     status: "@status2*"
     post: "@post*"
