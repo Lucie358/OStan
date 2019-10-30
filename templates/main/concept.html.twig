@@ -4,17 +4,11 @@
 {% endblock %}
 
 {% block content %}
-    <style>
-        .content {
-            margin: 1em 10em;
-            width: 55%;
 
-        }
-    </style>
 
     <h1 class="text-center font-weight-bold title-concept">
         Le concept O'Stan !</h1>
-    <img class='img-stan mx-auto' src="{{asset('images/stanlix.png')}}" alt="logo du site">
+    <img class='img-stan mx-auto' src="{{asset('images/stanlix.png')}}" alt="Dessin de Stan Lee version Asterix">
 
     <section class="text-center">
 
@@ -67,9 +61,6 @@
 
         </article>
 
-    </section>
-
-    <article>
 
         <h3 class="text-center font-weight-bold title-concept pt-2">Ce site a été conçu par 4 développeurs web en herbe.
         </h3>
@@ -90,7 +81,7 @@
                     Lucie
                 </h4>
 
-                <p class="px-5">
+                <p>
                     J'ai 22 ans, j'habite en Bretagne et j'ai rejoint O'Clock pour devenir Développeuse Web ! J'avais déjà pratiqué un peu de code au lycée et j'ai eu envie de continuer dans cette lancée ! J'adore les comics de chez DC Comics, les mangas également et mon super-vilain préféré est le Joker (le meilleur non ?). Je suis très contente de pouvoir dire que je suis enfin développeuse web junior, spécialisée en Symfony.
                 </p>
 
@@ -111,10 +102,10 @@
                     Karine
                 </h4>
 
-                <p class="px-5">
+                <p>
                     A 32 ans et après 12 ans dans la banque, j'ai décidé de changer de vie professionnelle. Je n'avais jamais osé me lancer dans le code avant, même si cela m'avait toujours attiré.
-                    Grâce à O'Clock, cette reconversion a pu prendre forme.
-                    Après une formation intensive de 5 mois, je peux désormais dire que je suis Développeuse web Junior, avec une spécialisation Symfony.
+                                        Grâce à O'Clock, cette reconversion a pu prendre forme.
+                                        Après une formation intensive de 5 mois, je peux désormais dire que je suis Développeuse web Junior, avec une spécialisation Symfony.
                 </p>
 
             </div>
@@ -134,7 +125,7 @@
                     Emeric
                 </h4>
 
-                <p class="px-5">
+                <p>
                     J'ai 28 ans et je suis passionné de manga. Avant de faire la formation chez O'Clock et de devenir Développeur web junior j'étais plombier mais j'avais déjà quelques connaissances en html et css.
                 </p>
 
@@ -155,7 +146,7 @@
                     Maxime
                 </h4>
 
-                <p class="px-5">
+                <p>
                     Passionné de comics de 32 ans, je suis dessinateurs à mes heures perdues ! Dessiner me permet de me détendre et d'observer davantage le monde qui m'entoure ! C'est comme un exutoire pour moi ! Je suis également passionné de cinéma, d'automobile et de l'Italie ! Après une reconversion professionnelle effectuée grâce à O'Clock, je suis désormais Développeur web junior !
                 </p>
 
@@ -165,13 +156,11 @@
 
 
     </article>
+</section>
 
 
-    <p class="text-center">Des suggestions ? Des questions ?
-        <a href="{{path('contact')}}">N'hésitez surtout pas à nous contacter !</a>
-    </p>
+<p class="text-center">Des suggestions ? Des questions ?
+    <a href="{{path('contact')}}">N'hésitez surtout pas à nous contacter !</a>
+</p>
 
-    <a class="text-dark text-center" href="{{ path('advice_post')}}">Revenir à l'accueil</a>
-
-
-{% endblock %}
+<a class="text-dark text-center" href="{{ path('advice_post')}}">Revenir à l'accueil</a>{% endblock %}

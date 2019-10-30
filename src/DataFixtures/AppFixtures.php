@@ -17,12 +17,11 @@ class AppFixtures extends Fixture
  
     private $slugger;
 
-    public function __construct(UserPasswordEncoderInterface $encoder, Slugger $slugger, RoleRepository $roleRepository, StatusRepository $statusRepository)
+    public function __construct(UserPasswordEncoderInterface $encoder, Slugger $slugger, RoleRepository $roleRepository)
     {
       $this->encoder = $encoder; 
       $this->slugger = $slugger;  
       $this->roleRepository = $roleRepository;
-      $this->statusRepository = $statusRepository;
    
     }
 
@@ -52,15 +51,10 @@ class AppFixtures extends Fixture
         $em->flush();
 
         $role = 'ROLE_USER_ADMIN' ;
-        $codeStatus = 'ROLE_USER_ADMIN' ;
-        $statusCode = 'UNBLOCKED';
-        $statusCode= $this->statusRepository->findOneByCode($statusCode);
-
         $adminRole = $this->roleRepository->findByCode($role);
         $userAdmin =new User ;
         $userAdmin->setFirstname('admin');
         $userAdmin->setLastname('admin');
-        $userAdmin->setStatus($statusCode);
         $userAdmin->setSlug('mot');
         $userAdmin->setIsActive(true);
         $userAdmin->setIsAccountNonLocked(true);

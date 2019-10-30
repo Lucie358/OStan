@@ -35,7 +35,7 @@
 
                 {% for user in listUser %}
                     <tr>
-                        <td>{{user.firstname}}</td>
+                        <td><a href="{{ path('user_show', {'slug': user.slug }) }}">{{user.firstname}}</a></td>
                         <td>{{user.lastname}}</td>
                         <td>{{user.username}}</td>
                         <td>{{user.companyname}}</td>
