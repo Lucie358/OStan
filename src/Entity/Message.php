@@ -32,9 +32,12 @@ class Message
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messagesReceived")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Conversation", inversedBy="messages")
      */
-    private $userReceiver;
+    private $conversation;
+
+  
+    
 
    
 
@@ -87,17 +90,6 @@ class Message
         return $this;
     }
 
-    public function getUserReceiver(): ?User
-    {
-        return $this->userReceiver;
-    }
-
-    public function setUserReceiver(?User $userReceiver): self
-    {
-        $this->userReceiver = $userReceiver;
-
-        return $this;
-    }
 
   
 
@@ -106,6 +98,20 @@ class Message
         
         return $this->createdAt;
     }
+
+    public function getConversation(): ?Conversation
+    {
+        return $this->conversation;
+    }
+
+    public function setConversation(?Conversation $conversation): self
+    {
+        $this->conversation = $conversation;
+
+        return $this;
+    }
+
+    
 
    
 }
