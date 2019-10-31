@@ -708,6 +708,16 @@ ul {
 	margin-bottom: 15px;
 }
 
+.userReceiver{
+	background-color:rgb(165, 226, 96);
+	margin-bottom: 5px;
+}
+.currentUser{
+	background-color: rgb(145, 197, 240);
+	margin-bottom: 5px;
+
+}
+
 /**** FIN MESSAGERIE ****/
 
 /* BACKEND */
@@ -864,6 +874,11 @@ ul {
 		255
 	); /* Mise en place d'un fond au cas où l'image soit en transparence */
 	box-shadow: rgba(0, 0, 0, 0.8) 0 0 16px;
+}
+.scrollable-menu {
+    height: auto;
+    max-height: 300px;
+    overflow-x: hidden;
 }
 
 /***************** RESPONSIVE ******************/

@@ -82,7 +82,7 @@ class MainController extends AbstractController
 
 			$this->addFlash(
 				'contactConfirmation',
-				'Votre message à bien été envoyée'
+				'Votre message à bien été envoyé'
 			);
 			return $this->redirectToRoute('contact');
 		}

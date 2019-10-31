@@ -12,8 +12,12 @@
 
 <div id="messages">
   <ul>
-    {% for message in messages %}
-    <li>{{ message.user.username }}: {{ message.content }}</li>
+	{% for message in messages %}
+	
+	
+    <li class={% if message.user.username == currentUser.username %}"currentUser" {% else %}
+		"userReceiver"
+	{% endif %}>{{ message.user.username }}: {{ message.content }}</li>
     {% endfor %}
   </ul>
 
@@ -24,6 +28,8 @@
 
 {% endblock %} {% block javascripts %}
 <script>
+
+  var currentUser = "{{currentUser.username}}"
   const url = new URL("http://localhost:3000/hub");
   url.searchParams.append("topic", "http://o-stan.fr/chat");
   const eventSource = new EventSource(url, { withCredentials: true });
@@ -35,9 +41,13 @@
       data.from.id + "" === "{{receiver.id}}" ||
       data.from.id + "" === "{{app.user.id}}"
     ) {
-      $("#messages ul").append(
-        "<li>" + data.from.username + ": " + data.message + "</li>"
-      );
+		const className = data.from.username === currentUser ? 'currentUser' : 'userReceiver';
+      $("#messages ul").prepend(
+        "<li class=\"" + className + "\">" + data.from.username + ": " + data.message + "</li>"
+	  );
+	  console.log(data.from.username)
+	  console.log(currentUser)
+
     } else {
       toastr.success(data.from.username + " vous a envoyé un message.");
     }

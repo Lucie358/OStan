@@ -22,12 +22,26 @@ class ChatController extends AbstractController
      */
     public function index(UserRepository $userRepository, Request $request, MessageRepository $messageRepository, Slugger $slugger)
     {
-        $users = $userRepository->findAll();
+		$users = $userRepository->findAll(); 
+		
+		
+			$currentUser =  $this->getUser();
+			$conversations = $messageRepository->findByConversation($currentUser);			
+			
+			
+		
+		
+		dump($conversations);
+		
+		
+
 
         return $this->render('chat/index.html.twig', [
             //    'messages' => $messages, 
             //    'form' => $form->createView()
-            'users' => $users
+			'users' => $users,
+			'conversations'=>$conversations,
+			'currentUser'=>$currentUser
 
 
         ]);
@@ -96,7 +110,8 @@ class ChatController extends AbstractController
 
         $response = $this->render('chat/show.html.twig', [
             'messages' => $messages,
-            'receiver' => $user
+			'receiver' => $user,
+			'currentUser'=>$currentUser
          
         ]);
 
