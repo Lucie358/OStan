@@ -110,7 +110,8 @@ class ChatController extends AbstractController
 
         $response = $this->render('chat/show.html.twig', [
             'messages' => $messages,
-            'receiver' => $user
+			'receiver' => $user,
+			'currentUser'=>$currentUser
          
         ]);
 

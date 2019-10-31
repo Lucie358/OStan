@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %} {% block body %}
 
-<h1>Chat example</h1>
+<h1>Messagerie</h1>
 
 {#
 <form id="chatBox">
@@ -16,9 +16,9 @@
 
 <ul>
 	{% for conversation in conversations %} {% if conversation.user.username ==
-	currentUser %}
+	currentUser%}
 	<li>{{ conversation.userReceiver.username }}</li>
-	{% endif %} {% if conversation.userReceiver.username == currentUser %}
+	{% endif %} {% if conversation.userReceiver.username == currentUser%}
 	<li>{{ conversation.user.username }}</li>
 	{% endif %} {% endfor %}
 </ul>
@@ -32,7 +32,7 @@
 				{% endfor %}
 			
 		</ul>
-	</div>
+</div>
 
 {% endblock %} {# {% block javascripts %}
 <script>

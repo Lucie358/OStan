@@ -76,15 +76,13 @@ class MessageRepository extends ServiceEntityRepository
 	public function findByConversation($user)
     {
         $qb = $this->createQueryBuilder('m');
-        // $qb->andWhere('m.user = :currentUser')
-        //     ->andWhere('m.userReceiver = :currentUser');
 
         $qb->where($qb->expr()->orX(
                 $qb->expr()->eq('m.user', ':currentUser'),
                 $qb->expr()->eq('m.userReceiver', ':currentUser')
             ))
             ->setParameter('currentUser', $user)
-            ->groupBy('m.userReceiver')
+            ->groupBy('m.userReceiver', 'm.user')
             ->orderBy('m.createdAt', 'ASC')
         ;
 
