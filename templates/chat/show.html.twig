@@ -29,31 +29,28 @@
 {% endblock %} {% block javascripts %}
 <script>
 
-  var currentUser = "{{currentUser.username}}"
+  var currentUser = "{{currentUser.id}}"
   const url = new URL("http://localhost:3000/hub");
   url.searchParams.append("topic", "http://o-stan.fr/chat");
   const eventSource = new EventSource(url, { withCredentials: true });
 
   eventSource.onmessage = function(mercureReceiveEvent) {
-    console.log(mercureReceiveEvent);
     const data = JSON.parse(mercureReceiveEvent.data);
-    if (
-      data.from.id + "" === "{{receiver.id}}" ||
-      data.from.id + "" === "{{app.user.id}}"
-    ) {
-		const className = data.from.username === currentUser ? 'currentUser' : 'userReceiver';
-      $("#messages ul").prepend(
-        "<li class=\"" + className + "\">" + data.from.username + ": " + data.message + "</li>"
-	  );
-	  console.log(data.from.username)
-	  console.log(currentUser)
+	console.log(mercureReceiveEvent);
+	console.log(data);
 
+    if (data.conversation.id + "" === "{{conversation.id}}") {
+		const className = data.from.id+ "" === currentUser  ? 'currentUser' : 'userReceiver';
+		$("#messages ul").append(
+			"<li class=\"" + className + "\">" + data.from.username + ": " + data.message + "</li>"
+		);
+		console.log(data.from.username)
     } else {
       toastr.success(data.from.username + " vous a envoyé un message.");
     }
   };
 
-  const postMessageUrl = "{{ path('postMessage', { user: receiver.id }) }}";
+  const postMessageUrl = "{{ path('postMessage', { conversation: conversation.id }) }}";
 
   $("#chatbox").on("submit", function(submitEvent) {
     submitEvent.preventDefault();

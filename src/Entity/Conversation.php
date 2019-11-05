@@ -28,6 +28,8 @@ class Conversation
      */
     private $messages;
 
+   
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -97,6 +99,8 @@ class Conversation
 
         return $this;
     }
+
+  
 
     
 }

@@ -36,8 +36,7 @@ class Message
      */
     private $conversation;
 
-  
-    
+   
 
    
 

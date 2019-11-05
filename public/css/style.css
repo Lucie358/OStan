@@ -604,7 +604,7 @@ ul {
 
 /********* GALERIE *********************/
 
-.modal {
+/* .modal {
 	z-index: 10;
 	display: none;
 	padding-top: 10px;
@@ -614,8 +614,6 @@ ul {
 	width: 100%;
 	height: 100%;
 	overflow: auto;
-	/* background-color:rgb(0,0,0);
-  background-color:rgba(0,0,0,0.8) */
 }
 
 .modal-cont {
@@ -639,7 +637,7 @@ ul {
 	opacity: 0.6;
 	filter: alpha(opacity=60);
 	/* -webkit-backface-visibility:hidden */
-}
+} */
 
 .close {
 	text-decoration: none;

@@ -46,5 +46,41 @@ class ConversationRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-    */
+	*/
+
+	/**
+     * @return Conversation[] Returns the liste of the user's conversations
+     */
+	 public function findConversationsByOneUser($user) {
+        $qb = $this->createQueryBuilder('c');
+
+		$qb->join('c.users', 'u')
+        ->andWhere(':user MEMBER OF c.users')
+        ->setParameters(array(
+			'user' => $user,
+		));
+
+        return $qb->getQuery()->getResult();
+	}
+
+	/**
+     * @return Conversation Returns the users conversations
+     */
+	public function findByUsers($users) {
+        $qb = $this->createQueryBuilder('c');
+
+		$qb->join('c.users', 'u');
+
+		foreach ($users as $user) {
+			$qb->andWhere(':user MEMBER OF c.users')
+			->setParameters(array(
+				'user' => $user,
+			));
+		}
+
+        return $qb->getQuery()->getOneOrNullResult();
+	}
+
+	
+        
 }
