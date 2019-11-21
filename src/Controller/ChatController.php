@@ -71,6 +71,7 @@ class ChatController extends AbstractController
 				'id' => $currentUser->getId(),
 				'username' => $currentUser->getUsername(),
 			],
+			'date'=> $newMessage->getCreatedAt(),
 			'conversation' => [
 				'id' => $conversation->getId(),
 			]

@@ -38,6 +38,7 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profil, roles: ROLE_USER_USER }
+        - { path: ^/chat, roles: ROLE_USER_USER }
         - { path: ^/annonces, roles: ROLE_USER_USER }
         - { path: ^/annonces\/\w+\/, roles: ROLE_USER_USER }
         - { path: ^/annonces\/\w+\/\d+\/, roles: ROLE_USER_USER }

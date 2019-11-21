@@ -1,4 +1,5 @@
-{% extends 'base.html.twig' %} {% block body %}
+{% extends 'base.html.twig' %} {% block title %}Messagerie{% endblock
+	%}{% block body %}
 
 <div
 	class="modal fade"
@@ -15,7 +16,7 @@
 			class="modal-content"
 		>
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">New message</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Nouveau message</h5>
 				<button
 					type="button"
 					class="close"
@@ -47,21 +48,21 @@
 					class="btn btn-secondary"
 					data-dismiss="modal"
 				>
-					Close
+					Fermer
 				</button>
 				<button type="submit" class="btn btn-primary">
-					Send message
+					Envoyer le message
 				</button>
 			</div>
 		</form>
 	</div>
 </div>
 
-<h1>Messagerie</h1>
+<h1 class="text-center m-4">Messagerie</h1>
 
-<ul>
+<ul class="conversations-list">
 	{% for conversation in conversations %}
-	<li>
+	<li class="conversation-item">
 		<a
 			class="dropdown-item"
 			href="{{ path('showmessagechat', { id: conversation.id }) }}"
@@ -74,7 +75,7 @@
 	{% endfor %}
 </ul>
 
-<div class="btn-group">
+<div>
 	<button
 		type="button"
 		class="btn btn-default dropdown-toggle"
@@ -114,7 +115,7 @@
 		// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
 		// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
 		var modal = $(this);
-		modal.find(".modal-title").text("New message to " + receiverName);
+		modal.find(".modal-title").text("Envoyer un message à " + receiverName);
 		modal.find(".modal-body #receiverId").val(receiverId);
 	});
 </script>
