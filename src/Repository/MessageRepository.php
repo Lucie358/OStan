@@ -20,23 +20,23 @@ class MessageRepository extends ServiceEntityRepository
     }
 
     //affichage des messages sur page accueil messagerie
-    public function findByTitleGroup($user)
-    {
-        $qb = $this->createQueryBuilder('m');
-        // $qb->andWhere('m.user = :currentUser')
-        //     ->andWhere('m.userReceiver = :currentUser');
+    // public function findByTitleGroup($user)
+    // {
+    //     $qb = $this->createQueryBuilder('m');
+    //     // $qb->andWhere('m.user = :currentUser')
+    //     //     ->andWhere('m.userReceiver = :currentUser');
 
-        $qb->where($qb->expr()->orX(
-                $qb->expr()->eq('m.user', ':currentUser'),
-                $qb->expr()->eq('m.userReceiver', ':currentUser')
-            ))
-            ->setParameter('currentUser', $user)
-            ->groupBy('m.title')
-            ->orderBy('m.createdAt', 'DESC')
-        ;
+    //     $qb->where($qb->expr()->orX(
+    //             $qb->expr()->eq('m.user', ':currentUser'),
+    //             $qb->expr()->eq('m.userReceiver', ':currentUser')
+    //         ))
+    //         ->setParameter('currentUser', $user)
+    //         ->groupBy('m.title')
+    //         ->orderBy('m.createdAt', 'DESC')
+    //     ;
 
-        return $qb->getQuery()->getResult();
-    }
+    //     return $qb->getQuery()->getResult();
+    // }
 
 
     // public function findBySlug($slug)
@@ -50,42 +50,43 @@ class MessageRepository extends ServiceEntityRepository
     //     ;
     // }
 
-    public function findConversation($user1, $user2) {
-        $qb = $this->createQueryBuilder('m');
+    // public function findConversation($user1, $user2) {
+    //     $qb = $this->createQueryBuilder('m');
 
-        $qb->where($qb->expr()->andX(
-                $qb->expr()->eq('m.user', ':user1'),
-                $qb->expr()->eq('m.userReceiver', ':user2')
-            ))
-            ->setParameter('user1', $user1)
-            ->setParameter('user2', $user2)
+    //     $qb->where($qb->expr()->andX(
+    //             $qb->expr()->eq('m.user', ':user1'),
+    //             $qb->expr()->eq('m.userReceiver', ':user2')
+    //         ))
+    //         ->setParameter('user1', $user1)
+    //         ->setParameter('user2', $user2)
 
-            ->orWhere($qb->expr()->andX(
-                $qb->expr()->eq('m.user', ':user2'),
-                $qb->expr()->eq('m.userReceiver', ':user1')
-            ))
-            ->setParameter('user1', $user1)
-            ->setParameter('user2', $user2)
+    //         ->orWhere($qb->expr()->andX(
+    //             $qb->expr()->eq('m.user', ':user2'),
+    //             $qb->expr()->eq('m.userReceiver', ':user1')
+    //         ))
+    //         ->setParameter('user1', $user1)
+    //         ->setParameter('user2', $user2)
 
-            ->orderBy('m.createdAt', 'DESC')
-        ;
+    //         ->orderBy('m.createdAt', 'DESC')
+    //     ;
 
-        return $qb->getQuery()->getResult();
-	}
+    //     return $qb->getQuery()->getResult();
+	// }
 	
-	public function findByConversation($user)
+	/**
+     * @return Message[] Returns all messages of a conversation
+     */
+    public function findByConversation($conversation)
     {
-        $qb = $this->createQueryBuilder('m');
-
-        $qb->where($qb->expr()->orX(
-                $qb->expr()->eq('m.user', ':currentUser'),
-                $qb->expr()->eq('m.userReceiver', ':currentUser')
+        return $this->createQueryBuilder('m')
+            ->innerJoin('m.conversation', 'c')
+            ->andWhere('c = :conversation')
+            ->setParameters(array(
+                'conversation' => $conversation,
             ))
-            ->setParameter('currentUser', $user)
-            ->groupBy('m.userReceiver', 'm.user')
-            ->orderBy('m.createdAt', 'ASC')
-        ;
-
-        return $qb->getQuery()->getResult();
+            ->getQuery()
+            ->getResult();
     }
+	
+
 }

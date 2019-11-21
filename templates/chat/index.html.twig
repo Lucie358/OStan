@@ -1,69 +1,122 @@
-{% extends 'base.html.twig' %} {% block body %}
+{% extends 'base.html.twig' %} {% block title %}Messagerie{% endblock
+	%}{% block body %}
 
-<h1>Messagerie</h1>
+<div
+	class="modal fade"
+	id="exampleModal"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="exampleModalLabel"
+	aria-hidden="true"
+>
+	<div class="modal-dialog" role="document">
+		<form
+			method="POST"
+			action="{{ path('newConversation') }}"
+			class="modal-content"
+		>
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Nouveau message</h5>
+				<button
+					type="button"
+					class="close"
+					data-dismiss="modal"
+					aria-label="Close"
+				>
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div>
+					<input type="hidden" id="receiverId" name="receiverId" />
 
-{#
-<form id="chatBox">
-	<input
-		name="message"
-		placeholder="Your message..."
-		size="50"
-		autocomplete="off"
-	/>
-	<input type="submit" />
-</form>
-#}
-
-<ul>
-	{% for conversation in conversations %} {% if conversation.user.username ==
-	currentUser%}
-	<li>{{ conversation.userReceiver.username }}</li>
-	{% endif %} {% if conversation.userReceiver.username == currentUser%}
-	<li>{{ conversation.user.username }}</li>
-	{% endif %} {% endfor %}
-</ul>
-
-
-<div class="btn-group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Envoyer un message à ... <span class="caret"></span></button>
-		<ul class="dropdown-menu scrollable-menu" role="menu">
-				{% for user in users %}
-				<li><a class="dropdown-item" href="{{ path('showmessagechat', { id: user.id }) }}" >{{ user.username }} </a></li>
-				{% endfor %}
-			
-		</ul>
+					<div class="form-group">
+						<label for="message-text" class="col-form-label"
+							>Message:</label
+						>
+						<textarea
+							class="form-control"
+							id="message-text"
+							name="messageContent"
+						></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button
+					type="button"
+					class="btn btn-secondary"
+					data-dismiss="modal"
+				>
+					Fermer
+				</button>
+				<button type="submit" class="btn btn-primary">
+					Envoyer le message
+				</button>
+			</div>
+		</form>
+	</div>
 </div>
 
-{% endblock %} {# {% block javascripts %}
+<h1 class="text-center m-4">Messagerie</h1>
+
+<ul class="conversations-list">
+	{% for conversation in conversations %}
+	<li class="conversation-item">
+		<a
+			class="dropdown-item"
+			href="{{ path('showmessagechat', { id: conversation.id }) }}"
+		>
+			{% for user in conversation.users if user != currentUser %}
+			{{ user.username }}
+			{% endfor %}
+		</a>
+	</li>
+	{% endfor %}
+</ul>
+
+<div>
+	<button
+		type="button"
+		class="btn btn-default dropdown-toggle"
+		data-toggle="dropdown"
+	>
+		Envoyer un message à ... <span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu scrollable-menu" role="menu">
+		{% for user in users %}
+		<li>
+			{#
+			<a
+				class="dropdown-item"
+				href="{{ path('showmessagechat', { id: user.id }) }}"
+				>{{ user.username }}
+			</a>
+			#}
+			<a
+				href=""
+				data-toggle="modal"
+				data-target="#exampleModal"
+				data-receiver-id="{{ user.id }}"
+				data-receiver-name="{{ user.username }}"
+				>{{ user.username }}</a
+			>
+		</li>
+		{% endfor %}
+	</ul>
+</div>
+
+{% endblock %} {% block javascripts %}
 <script>
-	const url = new URL("http://localhost:3000/hub");
-	url.searchParams.append("topic", "http://o-stan.fr/chat");
-	const eventSource = new EventSource(url, { withCredentials: true });
-
-	eventSource.onmessage = function(mercureReceiveEvent) {
-		console.log(mercureReceiveEvent);
-		const data = JSON.parse(mercureReceiveEvent.data);
-		const messagesUl = document.querySelector("#messages ul");
-		let newLi = document.createElement("li");
-		newLi.innerHTML = data.message;
-		messagesUl.appendChild(newLi);
-	};
-
-	const postMessageUrl = "{{ path('postMessage', { user: app.user.id }) }}";
-
-	$("#message").on("submit", function(submitEvent) {
-		submitEvent.preventDefault();
-		console.log(postMessageUrl);
-
-		const formData = new FormData(document.querySelector("#chatBox"));
-		$.ajax({
-			method: "POST",
-			url: postMessageUrl,
-			data: {
-				message: formData.get("message")
-			}
-		});
+	$("#exampleModal").on("show.bs.modal", function(event) {
+		var button = $(event.relatedTarget); // Button that triggered the modal
+		var receiverId = button.data("receiver-id"); // Extract info from data-* attributes
+		var receiverName = button.data("receiver-name"); // Extract info from data-* attributes
+		// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+		// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+		var modal = $(this);
+		modal.find(".modal-title").text("Envoyer un message à " + receiverName);
+		modal.find(".modal-body #receiverId").val(receiverId);
 	});
 </script>
-#}
-{# {% endblock %} #}
+{% endblock %}
