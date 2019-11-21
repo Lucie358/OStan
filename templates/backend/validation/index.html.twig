@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_backend.html.twig' %}
 
 {% block title %}Validation éditeur
 {% endblock %}
@@ -12,7 +12,6 @@
         <table id="horizontalScroll" class="table table-striped userTable">
 
             <thead class="position-sticky text-uppercase">
-
                 <tr>
                     <th scope="col">Prénom</th>
                     <th scope="col">Nom</th>
@@ -22,11 +21,8 @@
                     <th scope="col">Email</th>
                     <th scope="col">Job(s)</th>
                 </tr>
-
             </thead>
-
             <tbody>
-
                 {% for editor in editors %}
                     {% if editor.isActive == false %}
                         <tr>
@@ -46,9 +42,7 @@
                             </td>
                         </tr>
                     {% endif %}
-
                 {% endfor %}
-
             </tbody>
         </table>
     </div>

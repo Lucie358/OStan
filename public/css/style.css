@@ -27,7 +27,6 @@ a:focus {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	padding: 4%;
 }
 
 footer {
@@ -54,9 +53,12 @@ footer {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	flex-wrap:wrap;
 }
 #registration_form_jobs {
 	display: flex;
+	flex-wrap: wrap;
+	
 }
 
 .title-register {
@@ -464,6 +466,23 @@ footer {
 	border-radius: 10px;
 }
 
+.postGrid {
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+.imgWrapper {
+	width: 100%;
+	
+	height: 150px;
+	overflow: hidden;
+}
+.imgWrapper img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
 .advicePost-content {
 	margin-top: 70px;
 	padding: 10px;
@@ -504,16 +523,20 @@ footer {
 	border-left: 25px solid transparent;
 	z-index: -1;
 }
+
+.advice-post .imgWrapper{
+	max-width: 100% !important;
+}
 .section-post .imgWrapper {
 	flex-shrink: 0;
-	max-width: 200px;
-	max-height: 300px;
+	max-width: 140px;
+	
+	float: left;
+	margin: 0px 10px 0px 0px;
+	height: 150px;
 }
-.section-post .imgWrapper img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
+
+
 .date_post {
 	align-items: flex-end;
 	padding-right: 10px;
@@ -532,7 +555,7 @@ article {
 	box-shadow: 0px 1px 17px #c5b6b661;
 }
 
-.section-post {
+.advice-post {
 	word-wrap: break-word;
 }
 
@@ -566,18 +589,21 @@ article {
 
 /******* FORMULAIRE DE CONTACT ****************/
 
-.contact-form {
+.form {
 	padding: 50px;
 	margin-top: 100px;
 	border-radius: 2px;
 	box-shadow: 0px 12px 20px 0px #bdbdbd3d;
+	width: 70%;
+	margin: auto;
+    text-align: center;
 }
 
 ul {
 	list-style: none;
 }
 
-.contact-form-title {
+.form-title {
 	position: relative;
 	top: -50px;
 	padding: 5px;
@@ -712,12 +738,9 @@ ul {
 
 /* BACKEND */
 .body_articles {
-	display: flex;
-	justify-content: space-between;
+	padding: 10px;
 }
-.content_backend {
-	width: 80%;
-}
+
 
 .concept-presentation {
 	position: relative;
@@ -892,13 +915,6 @@ ul {
 		display: none;
 	}
 
-	.section-post .imgWrapper {
-		flex-shrink: 0;
-		max-width: 140px;
-		/* max-height: 300px; */
-		float: left;
-		margin: 0px 10px 0px 0px;
-	}
 
 	
 
@@ -941,5 +957,29 @@ ul {
     position: relative;
     top: 80px;
     margin: 0 auto;
+	}
+
+	/* FORMULAIRES */
+	.form {
+		border-radius: 2px;
+		box-shadow: 0px 12px 20px 0px #bdbdbd3d;	
+		text-align: center;
+		padding: 0px 30px;
+		width: 100%;
+	}
+	.form-title {
+		position: initial;
+		background: #ffe970;
+		box-shadow: 0 0 20px 0px #a1a1a133;
+	}
+	.form-group-stan{
+		flex-direction: column;
+		
+	}
+	.img-stanpool{
+		width:200px;
+	}
+	.content{
+		width: 100%;
 	}
 }

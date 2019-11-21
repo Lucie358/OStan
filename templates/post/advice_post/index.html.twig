@@ -4,29 +4,9 @@
 {% endblock %}
 
 {% block content %}
-    <style>
-        .postGrid {
-            display: grid;
-            grid-gap: 10px;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        }
-        .imgWrapper {
-            width: 100%;
-            max-width: 100% !important;
-            height: 150px;
-            overflow: hidden;
-        }
-        .imgWrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
 
-    </style>
-    <section class="section-post">
-
+    <section class="advice-post">
         <h1 class="text-center">Découvrez nos derniers articles !</h1>
-
         <div class="postGrid">
             {# Boucle pour afficher la liste des articles de conseils qui sont en BDD #}
             {% for advice_post in advicelistPosts %}
@@ -41,7 +21,6 @@
 
                         <!-- Card content -->
                         <div class="card-body">
-
                             <!-- Title -->
                             <h4 class="card-title">
                                 <a href="{{ path('advice_post_show', {'slug': advice_post.slug }) }}">{{ advice_post.title }}</a>
@@ -67,4 +46,3 @@
 
 {% endblock %}
 
-{% block javascripts %}{% endblock %}

@@ -4,20 +4,11 @@
 
 {% block content %}
 
-<style>
-    .content {
-        margin: 1em auto;
-        width: 55%;
 
-    }
-</style>
-
-<section class="section-post">
-
+<section class="section-post m-5">
     <h1 class="text-center font-weight-bold mb-5">Modifier un article</h1>
 
     {{ include('backend/post/_form.html.twig', {'button_label': 'Mettre à jour l\'article'}) }}
-
     <div class="d-flex justify-content-center">
         {{include('backend/post/_delete.html.twig')}}
     </div>
@@ -25,7 +16,5 @@
     <div class="d-flex justify-content-center">
         <a href="{{ path('backend_advicePostList') }}" class="btn btn-primary">Retour à la liste</a>
     </div>
-
 </section>
-
 {% endblock %}

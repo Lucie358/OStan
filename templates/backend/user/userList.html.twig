@@ -5,16 +5,10 @@
 {% endblock %}
 
 {% block content %}
-
-
     <h1 class="text-center font-weight-bold">Les utilisateurs</h1>
-
     <div class="table-responsive">
-
         <table id="horizontalScroll" class="table table-striped userTable">
-
             <thead class="position-sticky text-uppercase">
-
                 <tr>
                     <th scope="col">Prénom</th>
                     <th scope="col">Nom</th>
@@ -28,11 +22,8 @@
                     <th scope="col">Job(s)</th>
                     <th scope="col">Rôle</th>
                 </tr>
-
             </thead>
-
             <tbody>
-
                 {% for user in listUser %}
                     <tr>
                         <td><a href="{{ path('user_show', {'slug': user.slug }) }}">{{user.firstname}}</a></td>
@@ -50,6 +41,7 @@
                                 {{job.name}}
                             {% endfor %}
                         </td>
+
                         <td>
                             <div class="form-group">
                                 {# onchange : premier paramètre 'this' renvoie l'élément html où il se trouve, donc Select dans notre cas #}
@@ -62,8 +54,8 @@
                                 </select>
                             </div>
                         </td>
+
                         <td class="d-flex">
-                           
                             <a href="{{ path('backend_user_update_status', {'id': user.id}) }}" class="btn btn-warning">
                                 {% if user.isAccountNonLocked %}
                                     <i class="fas fa-user-lock"></i>
@@ -75,53 +67,15 @@
                             </a>
                             {{ include('backend/user/_delete.html.twig') }}
                         </td>
+
                     </tr>
                 {% endfor %}
-
             </tbody>
-
         </table>
-
     </div>
-
 
     <div class="d-flex justify-content-center">
         {{ knp_pagination_render(listUser) }}
     </div>
-
-{% endblock %}
-
-{% block javascripts %}
-
-    <script>
-        // On récupère l'url de base du server grâce à window.location
-        var baseUrl = window.location.origin;
-        // Element = Element html du select que l'on a grâce au 'this' dans le onchange du select.
-        // UserId = l'id de l'user envoyé en 2ème paramètre grâce à Twig
-        function handleRoleSelect(element, userId) {
-            // console.log(element.value); A décommenter si besoin
-            // console.log(userId);
-            // console.log(window.location)
-            // console.log(baseUrl);
-            // On utilise ajax pour faire une requête http en mode "rest" donc sans render
-            $.ajax({
-                method: "PATCH",
-                url: baseUrl + "/backend/user/" + userId + "/role/" + element.value,
-                // En cas de succès on affiche un toast confirmant le changement de rôle du user.
-                success: function (result) {
-                    toastr.success('Le rôle de ' + result.firstname + ' a été mis à jour');
-                },
-                error: function () {
-                    toastr.error('Impossible de mettre à jour le rôle, veuillez réessayer.')
-                }
-            });
-        }
-
-
-        $(document).ready(function () {
-            $('#horizontalScroll').dataTable({"scrollX": true});
-            $('.dataTables_length').addClass('bs-select');
-        });
-    </script>
 
 {% endblock %}
