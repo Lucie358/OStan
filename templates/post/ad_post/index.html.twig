@@ -14,12 +14,11 @@
             {% if post.type == "Annonce" and post.status.code == "UNBLOCKED" %}
 
                 <article class="animated slideInUp adCard">
-
                     <h2 class="title-card">{{post.title}}</h2>
-                    <div class="d-block d-lg-flex m-3">
 
+                    <div class="d-block d-xl-flex p-1">
 
-                        <div class="imgWrapper">
+                        <div class="imgWrapper mr-4 float-left">
                             <img src="{{ asset(picture_upload_path ~ (post.picture1 ?: 'marvel.jpg')) }}" onclick="onClick(this)">
                         </div>
                         <div>
@@ -27,6 +26,11 @@
                                 <p>{{ post.description|striptags|truncate(300, true)|raw }}</p>
                             </div>
                             <div class="date_post">
+                                <div class="d-flex justify-content-start adTags flex-wrap">
+                                    {% for tag in post.tags %}
+                                        <a href="{{ path('tag_show', {'slug': tag.slug }) }}" class="badge badge-pill badge-light amber lighten-2 mr-1">{{ tag.name }}</a>
+                                    {% endfor %}
+                                </div>
 
                                 <span class="font-italic text-muted" style="font-size: .8em;">
                                     Publié le
@@ -59,7 +63,7 @@
                 </article>
             {% endif %}
         {% endfor %}
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center flex-wrap">
             {{ knp_pagination_render(listPosts) }}
         </div>
 

@@ -3,7 +3,6 @@
     <head>
         <meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
         <title>
             {% block title %}Welcome!
             {% endblock %}
@@ -68,17 +67,17 @@
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         {% if is_granted('ROLE_USER_ADMIN') %}
                             <a class="nav-link d-none d-lg-block" href="{{path('backend_adList')}}">Admin</a>
-                            <a title="Admin"class="nav-link d-block d-lg-none" href="{{path('backend_adList')}}"><i class="fas fa-tools"></i></a>
+                            <a class="nav-link d-lg-none" href="{{path('backend_adList')}}"><i class="fas fa-user-shield"></i></a>
 
                         {% endif %}
-                        <a class="nav-link d-none d-lg-block" href="{{path('message') }}">Messagerie</a>
-                        <a title="Messagerie" class="nav-link d-block d-lg-none" href="{{path('message') }}"><i class="fas fa-envelope"></i></a>
+                        <a class="nav-link d-none d-lg-block" href="{{path('chat') }}">Messagerie</a>
+                        <a class="nav-link d-lg-none" href="{{path('chat') }}"><i class="far fa-envelope"></i></a>
 
                         <a class="nav-link d-none d-lg-block" href="{{path('user_show', {'slug': app.user.slug }) }}">Mon profil</a>
-                        <a title="Mon profil" class="nav-link d-block d-lg-none" href="{{path('user_show', {'slug': app.user.slug }) }}"><i class="fas fa-id-card"></i></a>
+                        <a class="nav-link d-lg-none" href="{{path('user_show', {'slug': app.user.slug }) }}"><i class="far fa-user-circle"></i></a>
 
                         <a class="nav-link nav-link-logout d-none d-lg-block" href="{{path('app_logout')}}">Déconnexion</a>
-                        <a title= "Déconnexion" class="nav-link nav-link-logout d-block d-lg-none" href="{{path('app_logout')}}"><i class="fas fa-sign-out-alt"></i></a>
+                        <a class="nav-link nav-link-logout d-lg-none" href="{{path('app_logout')}}"><i class="fas fa-sign-out-alt"></i></a>
 
                     {% else %}
                         <a class="nav-link" href="{{path('app_login')}}">Connexion</a>
@@ -131,9 +130,9 @@
 
         {% block footer %}
             <footer>
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <nav class="navbar navbar-dark bg-dark">
                     <div class="navbar-collapse justify-content-center" id="navbarSupportedContent">
-                        <ul class="navbar-nav">
+                        <ul class="navbar-footer">
                             <li class="nav-item mr-5">
                                 <a class="nav-link_backend" href="{{path('plan_du_site')}}">Plan du site</a>
                             </li>

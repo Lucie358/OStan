@@ -147,7 +147,7 @@
 
                     <tbody>
 
-                        {% for user in users if user.status.code == "BLOCKED" %}
+                        {% for user in users if user.isAccountNonLocked == false %}
                             <tr>
                                 <th scope="row">{{user.id}}</th>
                                 <td>{{user.firstname}}</td>
@@ -180,9 +180,9 @@
                                 <td class="d-flex">
                                     {# Pour les paramètres de onclick, si le status du post est == a BLOCKED alors le param = UNBLOCKED #}
                                     <button
-                                        type="button" class="btn btn-warning" onclick="handleStatusButtonUser(this,{{user.id}},{{user.status.code == 'BLOCKED' ? " 'UNBLOCKED' " : " 'BLOCKED' "}})">
+                                        type="button" class="btn btn-warning" onclick="handleStatusButtonUser(this,{{user.id}},{{user.isAccountNonLocked == false ?  user.isAccountNonLocked == true  : user.isAccountNonLocked == false}})">
                                         {# Si le code du status du post est == a BLOCKED alors on ecrit Débloquer dans le bouton #}
-                                        <i class="fas fa-minus-circle"></i> {{user.status.code == "BLOCKED" ? "Débloquer l'utilisateur" : "Bloquer l'utilisateur"}}
+                                        <i class="fas fa-minus-circle"></i> {{user.isAccountNonLocked == false ? "Débloquer l'utilisateur" : "Bloquer l'utilisateur"}}
                                     </button>
                                     {{ include('backend/user/_delete.html.twig') }}
                                 </td>
@@ -257,9 +257,9 @@
                 // En cas de succès on affiche un toast confirmant le changement de rôle du user.
                 success: function (result) {
                     toastr.success('Statut mis à jour');
-                    elementButton.textContent = statusCode == "BLOCKED" ? "Débloquer l'utilisateur" : "Bloquer l'utilisateur";
+                    elementButton.textContent = statusCode == false ? "Débloquer l'utilisateur" : "Bloquer l'utilisateur";
                     elementButton.onclick = function () {
-                        return handleStatusButtonUser(elementButton, userId, statusCode == "BLOCKED" ? "UNBLOCKED" : "BLOCKED")
+                        return handleStatusButtonUser(elementButton, userId, statusCode == false ? true : false)
                     };
                 },
                 error: function () {
