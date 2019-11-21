@@ -2,8 +2,9 @@
 <html>
     <head>
         <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>
-            {% block title %}Welcome!
+            {% block title %}Bienvenue
             {% endblock %}
         </title>
 
@@ -23,15 +24,7 @@
         <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700&display=swap" rel="stylesheet">
-        {% block stylesheets %}
-            <style>
-                body {
-                    height: 100%;
-                    display: flex;
-                    flex-direction: column;
-                }
-            </style>
-        {% endblock %}
+    
     </head>
     <body>
         {% block header %}
@@ -68,27 +61,35 @@
                 </div>
             </nav>
             <div class="jumbotron">
-                <div>
-                    <a href="{{path('advice_post')}}">
-                        <img class='logo' src="{{asset('images/logo.svg')}}" alt="">
-                    </a>
-                </div>
-                <div class='nav-connexion'>
+
+                <a href="{{path('advice_post')}}">
+                    <img class='logo' src="{{asset('images/logo.svg')}}" alt="logo du site">
+                </a>
+                <h2 class="title_home">Bienvenue sur O'Stan !</h2>
+            <p class="presentation">Le site de rencontre entre éditeurs, illustrateurs et auteurs passionnés qui souhaitent collaborer ensemble autour d'un nouveau projet ! </p>
+                <div
+                    class='nav-connexion'>
+                    {# Si je suis authentifié #}
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         {% if is_granted('ROLE_USER_ADMIN') %}
-                            <a class="nav-link" href="{{path('backend_adList')}}">Admin</a>
+                            <a class="nav-link d-none d-lg-block" href="{{path('backend_adList')}}">Admin</a>
+                            <a class="nav-link d-lg-none" href="{{path('backend_adList')}}"><i class="fas fa-user-shield"></i></a>
+
                         {% endif %}
-                        <a class="nav-link" href="{{path('chat') }}">Messagerie</a>
-                        <a class="nav-link" href="{{path('user_show', {'slug': app.user.slug }) }}">Mon profil</a>
-                        <a class="nav-link" href="{{path('app_logout')}}">Déconnexion</a>
+                        <a class="nav-link d-none d-lg-block" href="{{path('chat') }}">Messagerie</a>
+                        <a class="nav-link d-lg-none" href="{{path('chat') }}"><i class="far fa-envelope"></i></a>
+
+                        <a class="nav-link d-none d-lg-block" href="{{path('user_show', {'slug': app.user.slug }) }}">Mon profil</a>
+                        <a class="nav-link d-lg-none" href="{{path('user_show', {'slug': app.user.slug }) }}"><i class="far fa-user-circle"></i></a>
+
+                        <a class="nav-link nav-link-logout d-none d-lg-block" href="{{path('app_logout')}}">Déconnexion</a>
+                        <a class="nav-link nav-link-logout d-lg-none" href="{{path('app_logout')}}"><i class="fas fa-sign-out-alt"></i></a>
+
                     {% else %}
                         <a class="nav-link" href="{{path('app_login')}}">Connexion</a>
                         <a class="nav-link" href="{{path('app_register')}}">Inscription</a>
-
                     {% endif %}
                 </div>
-
-
             </div>
 
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar_backend">
@@ -125,7 +126,7 @@
             </nav>
         {% endblock %}
         {% block body %}
-            <div                class="body_backend">
+            <div class="body_backend">
                 
 
                 {% block content %}{% endblock %}
@@ -163,7 +164,8 @@
             <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
             <!-- MDB core JavaScript -->
             <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/js/mdb.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+			<script type="text/javascript" src="{{asset('js/app.js')}}"></script>
         {% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
