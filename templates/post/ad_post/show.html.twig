@@ -5,27 +5,20 @@
 {% endblock %}
 
 {% block content %}
-
-
     <section class="section-post">
-
         <article class="animated slideInUp ml-0">
             <div class="title-card border border-dark text-center py-2">
                 <h5>{{ post.title }}</h5>
             </div>
-
             {# Si je suis l'utilisateur qui a posté cette annonce je veux pouvoir la supprimer #}
             {% if post.user.id == app.user.id %}
                 {{include('post/ad_post/delete.html.twig')}}
             {% endif %}
-
             <div>
                 <div>
-                    <p
-                        id="editor1" class="mt-5 px-3">
-                        {# truncate permet de réduire la taille du contenu du contenu de l'article et ajouter "..." après #}
+                   
                         {{ post.description|raw }}
-                    </p>
+                   
                 </div>
             </div>
 
@@ -45,7 +38,7 @@
             {# Pour les paramètres de onclick, si le status du post est == a BLOCKED alors le param = UNBLOCKED #}
             {% if is_granted('ROLE_USER_ADMIN') %}
                 <button
-                    type="button" class="btn btn-warning c" onclick="handleStatusButton(this,{{post.id}},{{post.status.code == 'BLOCKED' ? " 'UNBLOCKED' " : " 'BLOCKED' "}})">
+                    type="button" class="btn btn-warning c" onclick="app.handleStatusButton(this,{{post.id}},{{post.status.code == 'BLOCKED' ? " 'UNBLOCKED' " : " 'BLOCKED' "}})">
                     {# Si le code du status du post est == a BLOCKED alors on ecrit Débloquer dans le bouton #}
                     <i class="fas fa-minus-circle"></i>
                     {{post.status.code == "BLOCKED" ? "Débloquer" : "Bloquer"}}
@@ -80,7 +73,7 @@
                         <div class="card-body">
                             {% if is_granted('ROLE_USER_ADMIN') %}
                                 <button
-                                    type="button" class="btn btn-warning mb-3" onclick="handleStatusButtonComment(this,{{comment.id}},{{comment.status.code == 'BLOCKED' ? " 'UNBLOCKED' " : " 'BLOCKED' "}})">
+                                    type="button" class="btn btn-warning mb-3" onclick="app.handleStatusButtonComment(this,{{comment.id}},{{comment.status.code == 'BLOCKED' ? " 'UNBLOCKED' " : " 'BLOCKED' "}})">
                                     {# Si le code du status du post est == a BLOCKED alors on ecrit Débloquer dans le bouton #}
                                     <i class="fas fa-minus-circle"></i>
                                     {{comment.status.code == "BLOCKED" ? "Débloquer" : "Bloquer"}}
@@ -113,98 +106,4 @@
     <a class="text-dark text-center" href="{{ path('ad_post')}}">Revenir à la liste des annonces</a>
 
 {% endblock %}
-{% block javascripts %}
-    <script>
-        $(document).ready(function () {
-            $('#editor1').ckeditor();
-        });
 
-        function setValue() {
-            $('#editor1').val($('input#val').val());
-        }
-        // On récupère l'url de base du server grâce à window.location
-        var baseUrl = window.location.origin;
-        // Element = Element html du select que l'on a grâce au 'this' dans le onchange du select.
-        // PostId = l'id de l'user envoyé en 2ème paramètre grâce à Twig
-        function handleStatusButton(elementButton, postId, statusCode) {
-            // console.log(postId);
-            // console.log(window.location)
-            console.log(baseUrl);
-            // console.log(elementButton);
-            // On utilise ajax pour faire une requête http en mode "rest" donc sans render
-            $.ajax({
-                method: "PATCH",
-                url: baseUrl + "/backend/" + postId + "/status/" + statusCode,
-                // En cas de succès on affiche un toast confirmant le changement de rôle du user.
-                success: function (result) {
-                    console.log(toastr);
-                    toastr.success('Statut mis à jour');
-                    elementButton.textContent = statusCode == "BLOCKED" ? "Débloquer" : "Bloquer";
-                    elementButton.onclick = function () {
-                        return handleStatusButton(elementButton, postId, statusCode == "BLOCKED" ? "UNBLOCKED" : "BLOCKED")
-                    };
-                },
-                error: function () {
-                    toastr.error('Impossible de mettre à jour le statut.')
-
-                }
-            });
-        }
-    </script>
-    <script>
-        function onClick(element) {
-            document.getElementById("img01").src = element.src;
-            document.getElementById("modal01").style.display = "block";
-        }
-    </script>
-    <script>
-        // On récupère l'url de base du server grâce à window.location
-        var baseUrl = window.location.origin;
-        // Element = Element html du select que l'on a grâce au 'this' dans le onchange du select.
-        // PostId = l'id de l'user envoyé en 2ème paramètre grâce à Twig
-        function handleStatusButtonComment(elementButton, commentId, statusCode) {
-            // console.log(postId);
-            // console.log(window.location)
-            console.log(baseUrl);
-            // console.log(elementButton);
-            // On utilise ajax pour faire une requête http en mode "rest" donc sans render
-            $.ajax({
-                method: "PATCH",
-                url: baseUrl + "/backend/comment/" + commentId + "/status/" + statusCode,
-                // En cas de succès on affiche un toast confirmant le changement de rôle du user.
-                success: function (result) {
-                    console.log(toastr);
-                    toastr.success('Statut mis à jour');
-                    elementButton.textContent = statusCode == "BLOCKED" ? "Débloquer" : "Bloquer";
-                    elementButton.onclick = function () {
-                        return handleStatusButtonComment(elementButton, commentId, statusCode == "BLOCKED" ? "UNBLOCKED" : "BLOCKED")
-                    };
-                },
-                error: function () {
-                    toastr.error('Impossible de mettre à jour le statut.')
-
-                }
-            });
-        }
-	</script>
-	<script>
-	$(document).ready(function() {
-		$(".lightbox img").click(function() {
-			var $body = $("body");
-			var $imgHref = $(this).attr("src");
-			var $lightbox = $('<div id="lightbox">');
-			var $lightboxImage = $("<img>").attr("src", $imgHref);
-			$lightbox.append($lightboxImage);
-			$lightbox.fadeIn(400);
-			$body.append($lightbox);
-			$("#lightbox").on("click", function(remove) { //Lorsque l'utilisateur clique en dehors de l'image, la lightbox se ferme et est supprimée
-				if (remove.target == this) { //La fermeture au clique ne fonctionne qu'en dehors de l'image
-					$lightbox.fadeOut(200, function() {
-						$("#lightbox").remove();
-					});
-				}
-			});
-		});
-	});
- </script>
-{% endblock %}

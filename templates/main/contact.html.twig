@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %} {% block title %}Formulaire de contact{% endblock
 %} {% block content %}
-<style></style>
 
-<div class="contact-form border text-center py-2 mx-5 mb-5 pt-3 w-50 mx-auto">
-  <h1 class="contact-form-title py-2 mx-5 text-center">
+
+<div class="form">
+  <h1 class="form-title">
     Formulaire de contact
   </h1>
   {% for message in app.flashes('contactConfirmation') %}

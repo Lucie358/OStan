@@ -1,18 +1,12 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_backend.html.twig' %}
 
 {% block title %}Modifier un Tag{% endblock %}
 
 {% block content %}
 
-<style>
-    .content {
-        margin: 1em auto;
-        width: 55%;
 
-    }
-</style>
 
-<section class="section-post">
+<section class="section-post mx-auto w-50 mt-3">
 
     <h1 class="text-center font-weight-bold mb-5">Modifier un Tag</h1>
 
@@ -25,6 +19,7 @@
     <div class="d-flex justify-content-center">
         <a href="{{ path('backend_tagList') }}" class="btn btn-primary">Retour à la liste</a>
     </div>
+</section>
 
     
 {% endblock %}
