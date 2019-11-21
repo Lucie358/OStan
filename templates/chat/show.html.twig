@@ -1,59 +1,64 @@
-{% extends 'base.html.twig' %} {% block body %} 
-{% block title %}Message
-{% endblock %}{#
-<div class="form_message">
-  {{
-    include("message/_form.html.twig", {
-      button_label: "Créer un nouveau message"
-    })
-  }}
-</div>
-#}
+{% extends 'base.html.twig' %}
+{% block title %}Message{% endblock
+	%} {% block body %} 
+
+
 
 <div id="messages">
   <ul>
 	{% for message in messages %}
 	
 	
-    <li class={% if message.user.username == currentUser.username %}"currentUser" {% else %}
-		"userReceiver"
-	{% endif %}>{{ message.user.username }}: {{ message.content }}</li>
+    <li class={% if message.user.username == currentUser.username %}"d-flex currentUser" {% else %}
+		"d-flex userReceiver"
+	{% endif %}><p class="text-break">{{ message.user.username }}: {{ message.content }} </p><p class={% if message.user.username == currentUser.username %}"dateMessageCurrent"{% else %}"dateMessageReceiver" {% endif %}>le {{message.createdAt|date('d-m-Y H:i')}}</p></li>
     {% endfor %}
   </ul>
 
-  <form id="chatbox">
-    <input type="text" name="message_content" />
+ 
+</div> 
+<form id="chatbox">
+	<div class="md-form">
+		<i class="fas fa-pencil-alt prefix"></i>
+		<textarea id="form10" class="md-textarea form-control" rows="3" name="message_content"></textarea>
+		
+	
+		<label for="form10">Envoyer un message</label>
+	  </div>
+	  <button type="submit" class="btn btn-info"> Envoyer </button>
   </form>
-</div>
+
+  
 
 {% endblock %} {% block javascripts %}
 <script>
 
-  var currentUser = "{{currentUser.username}}"
+  var currentUser = "{{currentUser.id}}"
   const url = new URL("http://localhost:3000/hub");
   url.searchParams.append("topic", "http://o-stan.fr/chat");
   const eventSource = new EventSource(url, { withCredentials: true });
 
   eventSource.onmessage = function(mercureReceiveEvent) {
-    console.log(mercureReceiveEvent);
     const data = JSON.parse(mercureReceiveEvent.data);
-    if (
-      data.from.id + "" === "{{receiver.id}}" ||
-      data.from.id + "" === "{{app.user.id}}"
-    ) {
-		const className = data.from.username === currentUser ? 'currentUser' : 'userReceiver';
-      $("#messages ul").prepend(
-        "<li class=\"" + className + "\">" + data.from.username + ": " + data.message + "</li>"
-	  );
-	  console.log(data.from.username)
-	  console.log(currentUser)
+	console.log(mercureReceiveEvent);
+	console.log(data);
+	const date = new Date(data.date.date);
+	const dateString = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes()
+
+    if (data.conversation.id + "" === "{{conversation.id}}") {
+		const className = data.from.id+ "" === currentUser  ? ' d-flex currentUser' : 'd-flex userReceiver';
+		$("#messages ul").append(
+			"<li class=\"" + className + "\"> <p class='text-break'>" + data.from.username + ":" + data.message + "</p><p class='dateMessage'">" + " " +dateString+ "</p></li>"
+		);
+		console.log(data.from.username)
+		console.log(data.date)
 
     } else {
       toastr.success(data.from.username + " vous a envoyé un message.");
     }
   };
 
-  const postMessageUrl = "{{ path('postMessage', { user: receiver.id }) }}";
+  const postMessageUrl = "{{ path('postMessage', { conversation: conversation.id }) }}";
 
   $("#chatbox").on("submit", function(submitEvent) {
     submitEvent.preventDefault();

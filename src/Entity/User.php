@@ -154,10 +154,7 @@ class User implements AdvancedUserInterface, \Serializable, EquatableInterface
      */
     private $galleryPosts;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="userReceiver", cascade={"persist","remove"})
-     */
-    private $messagesReceived;
+   
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Status", inversedBy="users")
@@ -179,6 +176,12 @@ class User implements AdvancedUserInterface, \Serializable, EquatableInterface
      */
     private $isAccountNonLocked;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Conversation", mappedBy="users")
+     */
+    private $conversations;
+
+
 
     public function __construct()
     {
@@ -192,6 +195,7 @@ class User implements AdvancedUserInterface, \Serializable, EquatableInterface
         $this->messagesReceived = new ArrayCollection();
         $this->createdAt = new \Datetime();
         $this->updatedAt = new \Datetime();
+        $this->conversations = new ArrayCollection();
     }
 
     public function __toString()
@@ -613,36 +617,7 @@ class User implements AdvancedUserInterface, \Serializable, EquatableInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Message[]
-     */
-    public function getMessagesReceived(): Collection
-    {
-        return $this->messagesReceived;
-    }
-
-    public function addMessagesReceived(Message $messagesReceived): self
-    {
-        if (!$this->messagesReceived->contains($messagesReceived)) {
-            $this->messagesReceived[] = $messagesReceived;
-            $messagesReceived->setUserReceiver($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMessagesReceived(Message $messagesReceived): self
-    {
-        if ($this->messagesReceived->contains($messagesReceived)) {
-            $this->messagesReceived->removeElement($messagesReceived);
-            // set the owning side to null (unless already changed)
-            if ($messagesReceived->getUserReceiver() === $this) {
-                $messagesReceived->setUserReceiver(null);
-            }
-        }
-
-        return $this;
-    }
+    
 
     public function getStatus(): ?Status
     {
@@ -775,4 +750,34 @@ class User implements AdvancedUserInterface, \Serializable, EquatableInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|Conversation[]
+     */
+    public function getConversations(): Collection
+    {
+        return $this->conversations;
+    }
+
+    public function addConversation(Conversation $conversation): self
+    {
+        if (!$this->conversations->contains($conversation)) {
+            $this->conversations[] = $conversation;
+            $conversation->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConversation(Conversation $conversation): self
+    {
+        if ($this->conversations->contains($conversation)) {
+            $this->conversations->removeElement($conversation);
+            $conversation->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    
 }
