@@ -593,11 +593,10 @@ article {
 
 .form {
 	padding: 50px;
-	margin-top: 100px;
+	margin: 15px auto;
 	border-radius: 2px;
 	box-shadow: 0px 12px 20px 0px #bdbdbd3d;
 	width: 70%;
-	margin: auto;
     text-align: center;
 }
 
