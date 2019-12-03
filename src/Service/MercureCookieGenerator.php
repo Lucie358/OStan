@@ -18,7 +18,7 @@ class MercureCookieGenerator
     public function generate(User $user)
     {
         $token = (new Builder())
-            ->set('mercure', ['subscribe' => ["http://o-stan.fr/user/{$user->getId()}"]])
+            ->set('mercure', ['subscribe' => ["http://92.243.8.247/user/{$user->getId()}"]])
             ->sign(new Sha384(), $this->secret)
             ->getToken();
 
