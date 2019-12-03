@@ -34,8 +34,8 @@
 <script>
 
   var currentUser = "{{currentUser.id}}"
-  const url = new URL("http://92.243.8.247:3000/hub");
-  url.searchParams.append("topic", "http://92.243.8.247/chat");
+  const url = new URL("http://localhost:3000/hub");
+  url.searchParams.append("topic", "http://localhost/chat");
   const eventSource = new EventSource(url, { withCredentials: true });
 
   eventSource.onmessage = function(mercureReceiveEvent) {

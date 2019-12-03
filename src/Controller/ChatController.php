@@ -52,7 +52,7 @@ class ChatController extends AbstractController
 			// ];
 			$targets = [];
 			foreach ($conversation->getUsers() as $user) {
-				$targets[] = "http://92.243.8.247/user/{$user->getId()}";
+				$targets[] = "http://localhost/user/{$user->getId()}";
 			}
 		}
 
@@ -77,7 +77,7 @@ class ChatController extends AbstractController
 			]
 		];
 
-		$update = new Update("http://92.243.8.247/chat", json_encode($eventData), $targets);
+		$update = new Update("http://localhost/chat", json_encode($eventData), $targets);
 		$publisher($update);
 		//On construit manuellement la réponse envoyée au navigateur (pas réussi à utiliser le module sérializer pour transformer un objet en Json)
 		$toReturn = [
@@ -114,8 +114,8 @@ class ChatController extends AbstractController
 		$message = $request->get("messageContent");
 
 		$targets = [
-			"http://92.243.8.247/user/{$currentUser->getId()}",
-			"http://92.243.8.247/user/{$userReceiver->getId()}"
+			"http://localhost/user/{$currentUser->getId()}",
+			"http://localhost/user/{$userReceiver->getId()}"
 		];
 
 		$newMessage = new Message();
@@ -137,7 +137,7 @@ class ChatController extends AbstractController
 				'id' => $conversationToRedirect->getId(),
 			]
 		];
-		$update = new Update("http://92.243.8.247/chat", json_encode($eventData), $targets);
+		$update = new Update("http://localhost/chat", json_encode($eventData), $targets);
 		$publisher($update);
 		return $this->redirectToRoute('showmessagechat', array('id' => $conversationToRedirect->getId()));
 	}
