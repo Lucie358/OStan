@@ -8,7 +8,9 @@ O'Stan a été réalisé en équipe en 4 semaines lors de ma période d'Apothéo
 >
 > La démonstration de O'Stan est visible ici: https://www.youtube.com/watch?v=YZgrCFXXboI&feature=youtu.be&t=4907
 
-<img src="public/images/stanlix.png" width="230" height="270" style="display:block; margin:auto;"/>
+<div style="text-align:center">
+<img src="public/images/stanlix.png" width="230" height="270"/>
+</div>
 
 ## O'Stan, c'est quoi ?
 
@@ -27,7 +29,9 @@ Pour favoriser la mise en relation de ces différents métiers, quelques fonctio
 
 * Un système de recherche: Pour trouver plus facilement la personne idéale, un système de recherche à été mis en place. Ce dernier fonctionne sur les critères de jobs et tags. 
 
-<img src="public/images/stangoku.png" width="230" height="270" style="display:block; margin:auto;"/>
+<div style="text-align:center">
+<img src="public/images/stangoku.png" width="230" height="270" style=""/>
+</div>
 
 ### Installer O'Stan pour avoir un aperçu: 
 - Cloner le repository sur sa machine. 
