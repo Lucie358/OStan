@@ -34,9 +34,9 @@
 
 {% endblock %}
 {% block javascripts %}
-<script>
+	<script>
 
-var currentUser = "{{ currentUser.id }}";
+		var currentUser = "{{ currentUser.id }}";
 const url = new URL("http://localhost:3000/hub");
 url.searchParams.append("topic", "http://localhost:3000/chat");
 const eventSource = new EventSource(url, {withCredentials: true});
@@ -53,8 +53,9 @@ date.getMonth() + 1
 if (data.conversation.id + "" === "{{ conversation.id }}") {
 const className = data.from.id + "" === currentUser ? ' d-flex currentUser' : 'd-flex userReceiver';
 const classNameMessage = data.from.id + "" === currentUser ? ' dateMessageCurrent' : 'dateMessageReceiver';
+$("#messages ul").append("<li class=\"" + className + "\"> <p class='text-break'>" + data.from.username + ":" + data.message + "</p><p class=\"" + classNameMessage + "\">" + " " + dateString + "</p></li>");
 
-$("#messages ul").append("<li class=\"" + className + "\"> <p class='text-break'>" + data.from.username + ":" + data.message + "</p><p class=\"" + classNameMessage + "\">" + " " + dateString + "</p></li>" console.log(data.from.username)console.log(data.date)} else {
+} else {
 toastr.success(data.from.username + " vous a envoyé un message.");
 }
 };
@@ -78,6 +79,5 @@ message: formData.get("message_content")
 }
 });
 });
-</script>
-	{% endblock %}
-	{% endblock %}
+	</script>
+{% endblock %}{% endblock %}

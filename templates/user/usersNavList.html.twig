@@ -1,8 +1,16 @@
+<<<<<<< HEAD
+<ul class="list-unstyled text-center d-flex flex-wrap d-lg-block">
+    {# Boucle pour afficher dans la sidebar les 5 derniers utilisateurs inscrits sur le site dans la side  #}
+    {% for user in users|slice(0,5) %}
+
+        <div class="userCard ">
+=======
 <ul class="userNavList">
     {# Boucle pour afficher dans la sidebar les 5 derniers utilisateurs inscrits sur le site dans la side  #}
     {% for user in users|slice(0,5) %}
 
         <div class="userCard">
+>>>>>>> 01dec9cbeb439729b5ef0f09ac7a36d52df9744e
 
             {# Si je suis authentifié, j'accède au profil de l'utilisateur lorsque je clique sur un utilisateur de la sidebar #}
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}

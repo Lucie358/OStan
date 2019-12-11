@@ -3,16 +3,15 @@
 {% block content %}
 
 
-
 <h1 class="font-weight-bold text-center">La communauté</h1>
-<img class='img-stan mx-auto' src="{{asset('images/stangoku.png')}}" alt="logo du site">
+<img class='img-stan mx-auto' src="{{asset('images/stangoku.png')}}" alt="Logo de Stan Lee en version San Goku">
 
 
 <section class="d-flex flex-wrap justify-content-center">
 
     {% for user in users %}
-        {# Si le status de l'utilisateur est UNBLOCKED, alors tu les affiches. #}
-        {% if user.isAccountNonLocked == true %}
+        {# Si le le compte n'est pas bloqué alors tu les affiches. #}
+        {% if user.isAccountNonLocked == true and user.isActive == true %} 
             <article class="pt-3 pb-1 tri-right user-card">
                 <div class="d-flex flex-row">
 

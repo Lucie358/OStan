@@ -29,7 +29,6 @@ class Status
     private $code;
 
    
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="status")
      */
@@ -81,7 +80,6 @@ class Status
         return $this;
     }
 
-  
 
     /**
      * @return Collection|Post[]
