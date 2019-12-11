@@ -9,7 +9,6 @@ use Lcobucci\JWT\Signer\Hmac\Sha384;
 class MercureCookieGenerator
 {
     private $secret;
-
     public function __construct(string $secret)
     {
         $this->secret = $secret;
@@ -21,7 +20,6 @@ class MercureCookieGenerator
             ->set('mercure', ['subscribe' => ["http://o-stan.fr/user/{$user->getId()}"]])
             ->sign(new Sha384(), $this->secret)
             ->getToken();
-
         return "mercureAuthorization={$token}; Path=/hub; HttpOnly;";
     }
 }
