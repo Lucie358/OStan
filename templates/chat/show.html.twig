@@ -35,7 +35,7 @@
 
   var currentUser = "{{currentUser.id}}"
   const url = new URL("http://localhost:3000/hub");
-  url.searchParams.append("topic", "http://o-stan.fr/chat");
+  url.searchParams.append("topic", "http://localhost/chat");
   const eventSource = new EventSource(url, { withCredentials: true });
 
   eventSource.onmessage = function(mercureReceiveEvent) {
@@ -47,8 +47,9 @@
 
     if (data.conversation.id + "" === "{{conversation.id}}") {
 		const className = data.from.id+ "" === currentUser  ? ' d-flex currentUser' : 'd-flex userReceiver';
+const classNameMessage = data.from.id+ "" === currentUser  ? ' dateMessageCurrent' : 'dateMessageReceiver';
 		$("#messages ul").append(
-			"<li class=\"" + className + "\"> <p class='text-break'>" + data.from.username + ":" + data.message + "</p><p class='dateMessage'">" + " " +dateString+ "</p></li>"
+			"<li class=\"" + className + "\"> <p class='text-break'>" + data.from.username + ":" + data.message + "</p><p class=\"" + classNameMessage + "\">"+" " +dateString+"</p></li>"
 		);
 		console.log(data.from.username)
 		console.log(data.date)
