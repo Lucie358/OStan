@@ -985,9 +985,7 @@ margin-bottom: 35px;
 	.logo {
 		display: none;
 	}
-	/* .body{
-		display:block;
-	} */
+
 	.presentation {
 		width: 100%;
 		border-radius: 0;
@@ -1005,13 +1003,9 @@ margin-bottom: 35px;
 		display: none;
 	}
 
-
-	
-
 	.sidebar {
 		box-shadow: 1px 1px 15px #4242425e;
 		width: 100%;
-		/* margin-left: 15px; */
 		background: #3f729bad;
 		flex-shrink: 0;
 		order: 2;

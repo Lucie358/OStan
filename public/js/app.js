@@ -30,6 +30,7 @@ var app = {
 			}
 		});
 	},
+	
 	handleRoleSelect: function(element, userId) {
 		// console.log(element.value); A décommenter si besoin
 		// console.log(userId);

@@ -46,7 +46,7 @@
                             <div class="form-group">
                                 {# onchange : premier paramètre 'this' renvoie l'élément html où il se trouve, donc Select dans notre cas #}
                                 {# le deuxième paramètre est généré par twig c'est l'id du user #}
-                                    <select class="form-control" id="select_role_{{user.id}}" onchange="handleRoleSelect(this, {{user.id}})"> {% for role in roles %}
+                                    <select class="form-control" id="select_role_{{user.id}}" onchange="app.handleRoleSelect(this, {{user.id}})"> {% for role in roles %}
                                         {# " ? et : " = Ternaire. Si le code du role du user est == au code du role dans notre boucle, alors affiche selected #}
                                         {# selected affichera directement le role par défaut du user #}
                                             <option value="{{role.id}}" {{user.role.code == role.code ? "selected" : ""}}> {{role.name}}</option>

@@ -92,7 +92,6 @@ class RegistrationController extends AbstractController
                 $userEmail = $user->getEmail();
                 $username = $user->getUsername();
 
-
                 $message = (new \Swift_Message('Bienvenue sur O\'Stan !'))
                     ->setFrom(['ostan.contact@gmail.com' => 'O\'Stan'])
                     ->setTo($userEmail);
