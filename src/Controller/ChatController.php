@@ -56,7 +56,6 @@ class ChatController extends AbstractController
 			}
 		}
 
-
 		$newMessage = new Message();
 		$newMessage->setUser($currentUser);
 		$newMessage->setContent($message);
@@ -71,7 +70,7 @@ class ChatController extends AbstractController
 				'id' => $currentUser->getId(),
 				'username' => $currentUser->getUsername(),
 			],
-			'date'=> $newMessage->getCreatedAt(),
+			'date' => $newMessage->getCreatedAt(),
 			'conversation' => [
 				'id' => $conversation->getId(),
 			]
@@ -158,7 +157,7 @@ class ChatController extends AbstractController
 		]);
 		// On peut ainsi lui rajouter le header permettant au navigateur de récupérer et stocker notre cookie
 		$response->headers->set('set-cookie', $mercureCookieGenerator->generate($this->getUser()));
-		
+
 		return $response; // On renvoie la réponse
 	}
 }

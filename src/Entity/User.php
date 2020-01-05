@@ -664,24 +664,18 @@ class User implements AdvancedUserInterface, \Serializable, EquatableInterface
         if (!$user instanceof User) {
             return false;
 		}
+		if (array_diff($this->getRoles(), $user->getRoles())) {
+            return false;
+        }
 		if ($this->isActive !== $user->isEnabled()) {
             return false;
 		}
-		if ($user instanceof User) {
-			// Check that the roles are the same, in any order
-			$isEqual = count($this->getRoles()) == count($user->getRoles());
-			if ($isEqual) {
-				foreach($this->getRoles() as $role) {
-					$isEqual = $isEqual && in_array($role, $user->getRoles());
-				}
-			}
-			return $isEqual;
-		}
-
+		
 		if ($this->isAccountNonLocked !== $user->isAccountNonLocked()) {
             return false;
 		}
 		return true;
+		
     }
 
 
