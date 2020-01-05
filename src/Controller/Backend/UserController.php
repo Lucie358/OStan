@@ -126,7 +126,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("user/{id}/islocked", name="user_update_status")
+     * @Route("user/{id}/isLocked", name="user_update_status")
      */
     public function updateStatus(Request $request, User $user)
     {

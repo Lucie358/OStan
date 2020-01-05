@@ -37,6 +37,11 @@
                                     <a class="text-dark font-weight-bold" href="{{path('user_show', {'slug': post.user.slug }) }}">{{ post.user }}</a>
                                 </span>
                             </div>
+                            <div class="d-flex justify-content-start adTags">
+                                {% for tag in post.tags %}
+                                    <a href="{{ path('tag_show', {'slug': tag.slug }) }}" class="badge badge-pill badge-light amber lighten-2 mr-1">{{ tag.name }}</a>
+                                {% endfor %}
+                            </div>
                             <div style="text-align: end;">
                                 <a href="{{ path('ad_post_show', {'slug': post.slug }) }}" class="btn btn-sm btn-light">
                                     Lire la suite

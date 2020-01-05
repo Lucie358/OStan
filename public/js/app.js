@@ -30,6 +30,7 @@ var app = {
 			}
 		});
 	},
+	
 	handleRoleSelect: function(element, userId) {
 		// console.log(element.value); A décommenter si besoin
 		// console.log(userId);
@@ -106,6 +107,34 @@ var app = {
 						elementButton,
 						postId,
 						statusCode == "BLOCKED" ? "UNBLOCKED" : "BLOCKED"
+					);
+				};
+			},
+			error: function() {
+				toastr.error("Impossible de mettre à jour le statut.");
+			}
+		});
+	},
+
+	// Element = Element html du select que l'on a grâce au 'this' dans le onchange du select.
+	// PostId = l'id de l'user envoyé en 2ème paramètre grâce à Twig
+	handleLockButton: function(elementButton, userId) {
+		// On utilise ajax pour faire une requête http en mode "rest" donc sans render
+		$.ajax({
+			method: "PATCH",
+			url: app.baseUrl + "/backend/user/" + userId + "/isLocked",
+			// En cas de succès on affiche un toast confirmant le changement de rôle du user.
+			success: function(result) {
+				toastr.success("Statut mis à jour");
+				elementButton.textContent =
+					userId.isAccountNonLocked == false
+						? "Bloquer"
+						: "Débloquer";
+				elementButton.onclick = function() {
+					return handleLockButton(
+						elementButton,
+						userId,
+						userId.isAccountNonLocked == false ? true : false
 					);
 				};
 			},

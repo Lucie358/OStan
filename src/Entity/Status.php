@@ -28,11 +28,7 @@ class Status
      */
     private $code;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="status")
-     */
-    private $users;
-
+   
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="status")
      */
@@ -45,7 +41,7 @@ class Status
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+     
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
@@ -84,36 +80,6 @@ class Status
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setStatus($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
-            // set the owning side to null (unless already changed)
-            if ($user->getStatus() === $this) {
-                $user->setStatus(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|Post[]

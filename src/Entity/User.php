@@ -156,11 +156,7 @@ class User implements AdvancedUserInterface, \Serializable, EquatableInterface
 
    
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Status", inversedBy="users")
-     */
-    private $status;
-
+ 
     /**
      * @ORM\Column(type="string", length=110)
      */
@@ -619,18 +615,6 @@ class User implements AdvancedUserInterface, \Serializable, EquatableInterface
 
     
 
-    public function getStatus(): ?Status
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?Status $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
     /**
      * @see UserInterface
      */
@@ -646,7 +630,8 @@ class User implements AdvancedUserInterface, \Serializable, EquatableInterface
         return serialize(array(
             $this->id,
             $this->username,
-            $this->password,
+			$this->password,
+			$this->role,
             $this->isActive,
             $this->isAccountNonLocked
 
@@ -661,34 +646,36 @@ class User implements AdvancedUserInterface, \Serializable, EquatableInterface
         list(
             $this->id,
             $this->username,
-            $this->password,
+			$this->password,
+			$this->role,
             $this->isActive,
-            $this->isAccountNonLocked
+			$this->isAccountNonLocked
+			
+			
 
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized);
-    }
+	}
+	
 
     public function isEqualTo(UserInterface $user)
     {
-        if ($this->password !== $user->getPassword()) {
+        if (!$user instanceof User) {
+            return false;
+		}
+		if (array_diff($this->getRoles(), $user->getRoles())) {
             return false;
         }
-
-        if ($this->username !== $user->getUsername()) {
+		if ($this->isActive !== $user->isEnabled()) {
             return false;
-        }
-        if ($this->isActive !== $user->getIsActive()) {
+		}
+		
+		if ($this->isAccountNonLocked !== $user->isAccountNonLocked()) {
             return false;
-        }
-
-        if ($this->isAccountNonLocked!== $user->getIsAccountNonLocked()) {
-            return false;
-        }
-      
-
-        return true;
+		}
+		return true;
+		
     }
 
 

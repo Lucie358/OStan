@@ -6,7 +6,7 @@ a {
 	color: black;
 }
 
-article {
+article{
 	margin-left: 0;
 }
 
@@ -500,22 +500,24 @@ footer {
 	padding: 0;
 }
 
-.adCard .adTags {
-	margin: 9px 0 9px 0px;
+.adCard .adTags{
+  margin: 9px 0 9px 0px;
+
+
 }
 .title-card {
-	position: relative;
-	top: 7px;
-	left: -36px;
-	text-align: left;
-	background: #3f729b;
-	/* background: #3f729b; */
-	border-radius: 6px;
-	width: 96%;
-	margin: auto;
-	color: #ffffff;
-	font-weight: 100;
-	font-size: 1.3em;
+  position: relative;
+    top: 7px;
+    left: -36px;
+    text-align: left;
+    background: #3f729b;
+    /* background: #3f729b; */
+    border-radius: 6px;
+    width: 96%;
+    margin: auto;
+    color: #ffffff;
+    font-weight: 100;
+    font-size: 1.3em;
 	padding: 4px 12px;
 	margin-bottom: 5px;
 }
@@ -555,12 +557,12 @@ footer {
 }
 
 article {
-	border: lightgray;
-	margin-top: 40px;
-	border: 1px solid #b3b3b338;
-	padding: 10px 10px 0px 10px;
-	margin-bottom: 20px;
-	box-shadow: 0px 1px 17px #c5b6b661;
+  border: lightgray;
+  margin-top: 40px;
+  border: 1px solid #b3b3b338;
+  padding: 10px 10px 0px 10px;
+  margin-bottom: 20px;
+  box-shadow: 0px 1px 17px #c5b6b661;
 }
 
 .advice-post {
@@ -828,11 +830,11 @@ margin-bottom: 35px;
 
 
 .concept-presentation {
-	position: relative;
-	background: rgba(92, 152, 255, 0);
-	overflow: hidden;
-	box-shadow: 0px 0px 3px 0px black;
-	padding: 5px;
+  position: relative;
+  background: rgba(92, 152, 255, 0);
+  overflow: hidden;
+  box-shadow: 0px 0px 3px 0px black;
+  padding: 5px;
 }
 
 .concept-presentation:before {
@@ -938,8 +940,8 @@ margin-bottom: 35px;
 }
 
 .user-card {
-	position: relative;
-	margin-left: 10px;
+  position: relative;
+  margin-left: 10px;
 }
 
 .lightbox {
@@ -985,9 +987,7 @@ margin-bottom: 35px;
 	.logo {
 		display: none;
 	}
-	/* .body{
-		display:block;
-	} */
+
 	.presentation {
 		width: 100%;
 		border-radius: 0;
@@ -1005,13 +1005,9 @@ margin-bottom: 35px;
 		display: none;
 	}
 
-
-	
-
 	.sidebar {
 		box-shadow: 1px 1px 15px #4242425e;
 		width: 100%;
-		/* margin-left: 15px; */
 		background: #3f729bad;
 		flex-shrink: 0;
 		order: 2;

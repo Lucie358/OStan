@@ -56,7 +56,6 @@ class ChatController extends AbstractController
 			}
 		}
 
-
 		$newMessage = new Message();
 		$newMessage->setUser($currentUser);
 		$newMessage->setContent($message);
@@ -71,7 +70,7 @@ class ChatController extends AbstractController
 				'id' => $currentUser->getId(),
 				'username' => $currentUser->getUsername(),
 			],
-			'date'=> $newMessage->getCreatedAt(),
+			'date' => $newMessage->getCreatedAt(),
 			'conversation' => [
 				'id' => $conversation->getId(),
 			]
@@ -147,14 +146,18 @@ class ChatController extends AbstractController
 	 */
 	public function show(Conversation $conversation, MessageRepository $messageRepository, MercureCookieGenerator $mercureCookieGenerator)
 	{
-		$messages = $messageRepository->findByConversation($conversation);
-		$currentUser =  $this->getUser();
+		$messages = $messageRepository->findByConversation($conversation); // On charge la liste des messages de la conversation
+		$currentUser =  $this->getUser(); // On récupère l'utilisateur courant
+
+		// Plutôt que de renvoyer la réponse directement, on la stock
 		$response = $this->render('chat/show.html.twig', [
 			'messages' => $messages,
 			'currentUser' => $currentUser,
 			'conversation' => $conversation
 		]);
+		// On peut ainsi lui rajouter le header permettant au navigateur de récupérer et stocker notre cookie
 		$response->headers->set('set-cookie', $mercureCookieGenerator->generate($this->getUser()));
-		return $response;
+
+		return $response; // On renvoie la réponse
 	}
 }

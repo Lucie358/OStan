@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Utils\Slugger as Slugger;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -22,7 +21,15 @@ class Post
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+	 * 
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 100,
+     *      minMessage = "Le titre de l'annonce doit contenir au moins {{ limit }} caractères",
+     *      maxMessage = "Le titre de l'annonce doit contenir au maximum {{ limit }} caractères"
+     * )
+     *
+     * @ORM\Column(type="text")
      */
     private $title;
 
@@ -64,7 +71,7 @@ class Post
     private $picture3;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
@@ -85,6 +92,12 @@ class Post
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="posts" )
+	 * @Assert\Count(
+     *      min = 1,
+     *      max = 5,
+     *      minMessage = "Vous devez choisir au moins 1 tag",
+     *      maxMessage = "Vous ne pouvez pas choisir plus de {{ limit }} tags"
+     * )
      */
     private $tags;
 

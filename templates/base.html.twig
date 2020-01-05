@@ -57,7 +57,7 @@
             <div class="jumbotron">
 
                 <a href="{{path('advice_post')}}">
-                    <img class='logo' src="{{asset('images/logo.svg')}}" alt="logo du site">
+                    <img class='logo' src="{{asset('images/logo.svg')}}" alt="logo du site, représentant Stan Lee">
                 </a>
                 <h2 class="title_home">Bienvenue sur O'Stan !</h2>
             <p class="presentation">Le site de rencontre entre éditeurs, illustrateurs et auteurs passionnés qui souhaitent collaborer ensemble autour d'un nouveau projet ! </p>
@@ -100,8 +100,9 @@
                             <button type="button" class="btn btn-link btn-social"><i class="fab fa-instagram"></i></button>
                         </div>
 
-                        <div>
-                            <h4 class="title-sidebar">Les dernières annonces</h4>
+                        <h4 class="title-sidebar">Les dernières annonces</h4>
+						<div class="d-flex flex-wrap d-lg-block">
+                            
                             {{render(controller(
                                 'App\\Controller\\PostController::adPostsNavList'
                             ))}}
