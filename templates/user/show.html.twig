@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %} {% block title %}
 {{ user.username }}
-{% endblock %} {% block content %}
+{% endblock %}
+
+
+ {% block content %}
 <style>
 	.content {
 		width: 100%;
@@ -153,7 +156,4 @@
 	<a class="text-dark mt-5 text-center" href="{{ path('advice_post') }}">Revenir à l'accueil</a>
 </section>
 
-{% endblock %} {% block javascripts %}
-
-
-{% endblock %}
+{% endblock %} 

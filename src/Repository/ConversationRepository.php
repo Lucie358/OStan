@@ -71,6 +71,8 @@ class ConversationRepository extends ServiceEntityRepository
 
 		$qb->join('c.users', 'u');
 
+		dump($users);
+
 		foreach ($users as $user) {
 			$qb->andWhere(':user MEMBER OF c.users')
 			->setParameters(array(
@@ -78,9 +80,33 @@ class ConversationRepository extends ServiceEntityRepository
 			));
 		}
 
+		dump($qb);
+		die;
+
         return $qb->getQuery()->getOneOrNullResult();
 	}
 
-	
+	/**
+     * @return Conversation Returns the two users conversations
+     */
+	public function findByCouple($user1, $user2) {
+        $qb = $this->createQueryBuilder('c');
+
+		$qb->join('c.users', 'u');
+
+		dump($user1);
+		dump($user2);
+
+		$qb->andWhere(':user1 MEMBER OF c.users');
+		$qb->andWhere(':user2 MEMBER OF c.users');
+		$qb->setParameters(array(
+			'user1' => $user1,
+			'user2' => $user2,
+		));
+
+		dump($qb);
+
+        return $qb->getQuery()->getOneOrNullResult();
+	}
         
 }

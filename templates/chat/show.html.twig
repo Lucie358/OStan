@@ -1,10 +1,7 @@
 {% extends 'base.html.twig' %}
-{% block title %}Message
-{% endblock
-	%}
+{% block title %}Message{% endblock %}
+
 {% block body %}
-
-
 	<div id="messages">
 		<ul>
 			{% for message in messages %}
@@ -30,53 +27,52 @@
 			Envoyer
 		</button>
 	</form>
-
-
 {% endblock %}
 
 {% block javascripts %}
-<script>
+	<script>
+		var currentUser = "{{ currentUser.id }}";
+		const url = new URL("http://localhost:3000/hub");
+		url.searchParams.append("topic", "http://localhost/chat");
+		const eventSource = new EventSource(url, {withCredentials: true});
 
-var currentUser = "{{ currentUser.id }}";
-const url = new URL("http://localhost:3000/hub");
-url.searchParams.append("topic", "http://localhost:3000/chat");
-const eventSource = new EventSource(url, {withCredentials: true});
+		eventSource.onmessage = function (mercureReceiveEvent) {
+			const data = JSON.parse(mercureReceiveEvent.data);
+			console.log("mercureReceiveEvent", mercureReceiveEvent);
+			console.log("mercureReceiveEventData", data);
+			const date = new Date(data.date.date);
+			const dateString = date.getDate() + "-" + (
+			date.getMonth() + 1
+			) + "-" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes()
 
-eventSource.onmessage = function (mercureReceiveEvent) {
-	const data = JSON.parse(mercureReceiveEvent.data);
-	// console.log(mercureReceiveEvent);
-	// console.log(data);
-	const date = new Date(data.date.date);
-	const dateString = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes()
-
-	if (data.conversation.id + "" === "{{ conversation.id }}") {
-		const className = data.from.id + "" === currentUser ? ' d-flex currentUser' : 'd-flex userReceiver';
-		const classNameMessage = data.from.id + "" === currentUser ? ' dateMessageCurrent' : 'dateMessageReceiver';
-		$("#messages ul").append("<li class=\"" + className + "\"> <p class='text-break'>" + data.from.username + ":" + data.message + "</p><p class=\"" + classNameMessage + "\">" + " " + dateString + "</p></li>");
-	} else {
-		toastr.success(data.from.username + " vous a envoyé un message.");
-	}
-};
+			if (data.conversation.id + "" === "{{ conversation.id }}") {
+				const className = data.from.id + "" === currentUser ? ' d-flex currentUser' : 'd-flex userReceiver';
+				const classNameMessage = data.from.id + "" === currentUser ? ' dateMessageCurrent' : 'dateMessageReceiver';
+				$("#messages ul").append("<li class=\"" + className + "\"> <p class='text-break'>" + data.from.username + ":" + data.message + "</p><p class=\"" + classNameMessage + "\">" + " " + dateString + "</p></li>");
+			} else {
+				toastr.success(data.from.username + " vous a envoyé un message.");
+			}
+		};
 
 
-const postMessageUrl = "{{ path('postMessage', { conversation: conversation.id }) }}";
+		const postMessageUrl = "{{ path('postMessage', { conversation: conversation.id }) }}";
 
-$("#chatbox").on("submit", function (submitEvent) {
-	submitEvent.preventDefault();
-	console.log(postMessageUrl);
+		$("#chatbox").on("submit", function (submitEvent) {
+			submitEvent.preventDefault();
+			console.log(postMessageUrl);
 
-	const formData = new FormData(document.querySelector("#chatbox"));
+			const formData = new FormData(document.querySelector("#chatbox"));
 
-	console.log(formData);
-	console.log(formData.get("message_content"));
+			console.log(formData);
+			console.log(formData.get("message_content"));
 
-	$.ajax({
-		method: "POST",
-		url: postMessageUrl,
-		data: {
-			message: formData.get("message_content")
-		}
-	});
-});
+			$.ajax({
+				method: "POST",
+				url: postMessageUrl,
+				data: {
+					message: formData.get("message_content")
+				}
+			});
+		});
 	</script>
-{% endblock %}{% endblock %}
+{% endblock %}

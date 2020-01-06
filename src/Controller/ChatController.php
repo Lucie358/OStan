@@ -56,6 +56,8 @@ class ChatController extends AbstractController
 			}
 		}
 
+		dump($targets);
+
 		$newMessage = new Message();
 		$newMessage->setUser($currentUser);
 		$newMessage->setContent($message);
@@ -94,11 +96,13 @@ class ChatController extends AbstractController
 	 */
 	public function newConversation(Publisher $publisher, Request $request, ConversationRepository $conversationRepository, UserRepository $userRepository)
 	{
-
 		$userReceiverId = $request->get('receiverId');
 		$userReceiver = $userRepository->find($userReceiverId);
 		$currentUser =  $this->getUser();
-		$conversationToRedirect = $conversationRepository->findByUsers(array($currentUser, $userReceiver));
+		// $conversationToRedirect = $conversationRepository->findByUsers(array($currentUser, $userReceiver));
+		$conversationToRedirect = $conversationRepository->findByCouple($currentUser, $userReceiver);
+
+		
 
 		if ($conversationToRedirect == null) {
 			$conversationToRedirect = new Conversation();
